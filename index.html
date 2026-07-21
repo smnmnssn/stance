@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Free alloy wheel and tyre fitment calculator. Compare poke, offset (ET), inset, rolling radius and speedo error live as you change wheel and tyre sizes.">
+<title>STANCE — Wheel & Tyre Fitment Calculator</title>
+<style>
+  :root {
+    --ground: #0b0e12; --surface: #141922; --surface-2: #1b212c; --line: #28303b; --line-soft: #1e2530;
+    --ink: #eaf0f6; --ink-dim: #8b97a6; --ink-faint: #5c6675;
+    --existing: #ff7a33; --existing-soft: rgba(255,122,51,0.14);
+    --new: #31c8ff; --new-soft: rgba(49,200,255,0.14);
+    --hl: #ffcf40;
+    --ok: #2fd27a; --warn: #ffb02e; --bad: #ff5468;
+    --shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 8px 30px rgba(0,0,0,0.35);
+    --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "Cascadia Mono", "SFMono-Regular", "Segoe UI Mono", Consolas, "Liberation Mono", monospace;
+    --font-cond: "Arial Narrow", "Roboto Condensed", "Helvetica Neue", var(--font-ui);
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --ground: #e9edf2; --surface: #ffffff; --surface-2: #f3f6fa; --line: #d3dae3; --line-soft: #e4e9ef;
+      --ink: #131a23; --ink-dim: #5a6675; --ink-faint: #97a2b0;
+      --existing: #e8611a; --existing-soft: rgba(232,97,26,0.12);
+      --new: #0a9fd4; --new-soft: rgba(10,159,212,0.12);
+      --hl: #b7790a;
+      --ok: #1a9e5c; --warn: #c67d09; --bad: #dc3c50;
+      --shadow: 0 1px 2px rgba(20,30,45,0.06), 0 10px 30px rgba(30,45,70,0.08);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0b0e12; --surface: #141922; --surface-2: #1b212c; --line: #28303b; --line-soft: #1e2530;
+    --ink: #eaf0f6; --ink-dim: #8b97a6; --ink-faint: #5c6675;
+    --existing: #ff7a33; --existing-soft: rgba(255,122,51,0.14);
+    --new: #31c8ff; --new-soft: rgba(49,200,255,0.14); --hl: #ffcf40;
+    --ok: #2fd27a; --warn: #ffb02e; --bad: #ff5468;
+    --shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 8px 30px rgba(0,0,0,0.35);
+  }
+  :root[data-theme="light"] {
+    --ground: #e9edf2; --surface: #ffffff; --surface-2: #f3f6fa; --line: #d3dae3; --line-soft: #e4e9ef;
+    --ink: #131a23; --ink-dim: #5a6675; --ink-faint: #97a2b0;
+    --existing: #e8611a; --existing-soft: rgba(232,97,26,0.12);
+    --new: #0a9fd4; --new-soft: rgba(10,159,212,0.12); --hl: #b7790a;
+    --ok: #1a9e5c; --warn: #c67d09; --bad: #dc3c50;
+    --shadow: 0 1px 2px rgba(20,30,45,0.06), 0 10px 30px rgba(30,45,70,0.08);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--font-ui); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 64px; }
+
+  header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+  .brand { display: flex; align-items: baseline; gap: 12px; }
+  .wordmark { font-family: var(--font-cond); font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; font-size: clamp(34px, 7vw, 52px); line-height: 0.9; margin: 0; }
+  .wordmark .slash { color: var(--new); }
+  .tagline { color: var(--ink-dim); font-size: 13px; max-width: 34ch; letter-spacing: 0.01em; }
+  .tagline strong { color: var(--ink); font-weight: 600; }
+  .head-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+  button, .btn { font-family: var(--font-ui); font-size: 13px; font-weight: 600; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: border-color .15s, background .15s, transform .05s; }
+  button:hover, .btn:hover { border-color: var(--ink-faint); }
+  button:active { transform: translateY(1px); }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--new); outline-offset: 2px; }
+  .btn-primary { background: var(--new); color: #04121a; border-color: transparent; }
+  :root[data-theme="light"] .btn-primary { color: #ffffff; }
+  @media (prefers-color-scheme: light) { .btn-primary { color: #ffffff; } }
+  .btn-primary:hover { filter: brightness(1.08); border-color: transparent; }
+
+  .seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--line); border-radius: 9px; padding: 2px; gap: 2px; }
+  .seg button { background: transparent; border: 0; padding: 6px 11px; border-radius: 7px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-dim); font-weight: 600; }
+  .seg button:hover { color: var(--ink); border-color: transparent; }
+  .seg button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.28); }
+
+  .grid { display: grid; grid-template-columns: 340px 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+
+  .setups { display: flex; flex-direction: column; gap: 14px; }
+  .card { padding: 16px 16px 18px; position: relative; overflow: hidden; }
+  .card::before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; }
+  .card.existing::before { background: var(--existing); }
+  .card.new::before { background: var(--new); }
+  .card-head { display:flex; align-items:center; gap:9px; margin-bottom: 14px; }
+  .dot { width: 11px; height: 11px; border-radius: 3px; }
+  .existing .dot { background: var(--existing); box-shadow: 0 0 12px var(--existing-soft); }
+  .new .dot { background: var(--new); box-shadow: 0 0 12px var(--new-soft); }
+  .card-title { font-family: var(--font-cond); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 15px; }
+  .card-sub { margin-left: auto; font-family: var(--font-mono); font-size: 12px; color: var(--ink-dim); }
+
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 11px 12px; }
+  .field { display: flex; flex-direction: column; gap: 5px; border-radius: 8px; }
+  .field.span { grid-column: 1 / -1; }
+  .card.new .field[data-hl] { cursor: help; }
+  label { font-size: 10.5px; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-dim); font-weight: 600; }
+  .input-row { display: flex; align-items: center; background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 0 10px; transition: border-color .12s; }
+  .card.new .field[data-hl]:hover .input-row { border-color: var(--hl); }
+  .input-row input { font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--ink); background: transparent; border: 0; width: 100%; padding: 8px 0; -moz-appearance: textfield; }
+  .input-row input::-webkit-outer-spin-button, .input-row input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .input-row .unit { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); padding-left: 6px; white-space: nowrap; }
+
+  .slider { grid-column: 1 / -1; margin-top: 1px; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; cursor: pointer; }
+  input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: var(--line); }
+  input[type=range]::-moz-range-track { height: 4px; border-radius: 4px; background: var(--line); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--new); margin-top: -6px; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
+  input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--new); border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
+
+  .output { display: flex; flex-direction: column; gap: 18px; }
+
+  .verdict { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .verdict-row { display: flex; gap: 26px; flex-wrap: wrap; }
+  .vstat { display: flex; flex-direction: column; gap: 2px; }
+  .vstat .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-dim); font-weight: 600; }
+  .vstat .v { font-family: var(--font-mono); font-size: clamp(26px, 4.5vw, 34px); font-weight: 700; line-height: 1; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .vstat .v small { font-size: 15px; font-weight: 600; color: var(--ink-dim); }
+  .vstat .cap { font-size: 11.5px; color: var(--ink-dim); }
+  .val-poke .v { color: var(--new); }
+  .badge { font-family: var(--font-mono); font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; letter-spacing: .02em; }
+  .badge.ok { color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, transparent); }
+  .badge.warn { color: var(--warn); background: color-mix(in srgb, var(--warn) 16%, transparent); }
+  .badge.bad { color: var(--bad); background: color-mix(in srgb, var(--bad) 16%, transparent); }
+  .badge::before { content:""; width:7px; height:7px; border-radius:50%; background: currentColor; }
+  .verdict-note { font-size: 12.5px; color: var(--ink-dim); border-top: 1px solid var(--line-soft); padding-top: 12px; }
+
+  .diagram-wrap { padding: 6px; }
+  .diagram-head { display:flex; justify-content: space-between; align-items:center; padding: 12px 14px 4px; }
+  .diagram-head .lbl { font-family: var(--font-cond); text-transform: uppercase; letter-spacing: .1em; font-size: 12px; color: var(--ink-dim); font-weight: 700; }
+  .legend { display:flex; gap: 14px; font-family: var(--font-mono); font-size: 11px; }
+  .legend span { display:flex; align-items:center; gap:6px; color: var(--ink-dim); }
+  .legend i { width: 14px; height: 3px; border-radius: 2px; display:inline-block; }
+  .legend .e i { background: var(--existing); }
+  .legend .n i { background: var(--new); }
+  svg { display: block; width: 100%; height: auto; }
+
+  .results { padding: 4px 4px 6px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 9px 14px; font-family: var(--font-mono); font-size: 13.5px; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; font-family: var(--font-ui); color: var(--ink-dim); font-size: 12.5px; font-weight: 500; }
+  thead th { font-family: var(--font-cond); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; color: var(--ink-dim); font-weight: 700; border-bottom: 1px solid var(--line); padding-top: 12px; padding-bottom: 10px; }
+  thead th.c-e { color: var(--existing); }
+  thead th.c-n { color: var(--new); }
+  tbody tr { border-bottom: 1px solid var(--line-soft); }
+  tbody tr:last-child { border-bottom: 0; }
+  tbody tr[data-hl] { cursor: help; }
+  tbody tr[data-hl]:hover { background: var(--surface-2); }
+  tbody tr[data-hl]:hover td:first-child { color: var(--hl); }
+  td.v-e { color: var(--ink); }
+  td.v-n { color: var(--new); font-weight: 600; }
+  td.v-d { color: var(--ink-dim); font-size: 12.5px; }
+  td.v-d.up { color: var(--warn); }
+  td.v-d.down { color: var(--ok); }
+
+  .gloss { padding: 16px 18px 18px; }
+  .gloss-head { font-family: var(--font-cond); text-transform: uppercase; letter-spacing:.08em; font-size:13px; font-weight:700; color: var(--ink); display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:12px; }
+  .gloss-head span { font-family: var(--font-ui); text-transform:none; letter-spacing:0; font-size:11.5px; color: var(--ink-faint); font-weight:500; }
+  .gloss dl { margin:0; display:grid; grid-template-columns: 1fr 1fr; gap: 2px 16px; }
+  @media (max-width:560px){ .gloss dl { grid-template-columns:1fr; } }
+  .term { padding:9px 10px; border-radius:8px; cursor:help; border:1px solid transparent; transition: background .12s, border-color .12s; }
+  .term:hover { background: var(--surface-2); border-color: var(--line); }
+  .term dt { font-family: var(--font-mono); font-size:12.5px; font-weight:700; color: var(--ink); margin-bottom:3px; display:flex; align-items:center; }
+  .term dt .g-dot { width:8px;height:8px;border-radius:2px; margin-right:8px; background: var(--ink-faint); }
+  .term:hover dt .g-dot { background: var(--hl); }
+  .term dd { margin:0; font-size:12px; line-height:1.45; color: var(--ink-dim); }
+
+  footer { margin-top: 22px; color: var(--ink-faint); font-size: 12px; line-height: 1.55; display:flex; flex-direction: column; gap: 6px; }
+  .flag { display:flex; gap: 8px; align-items: flex-start; }
+  .flag svg { width: 14px; height: 14px; flex: none; margin-top: 2px; }
+
+  .toast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--ground); font-size: 13px; font-weight: 600; padding: 10px 16px; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 20; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1 class="wordmark">Stance<span class="slash">/</span></h1>
+      <p class="tagline"><strong>Alloy wheel &amp; tyre fitment.</strong> Poke, clearance, rolling radius &amp; speedo error — live as you dial it in.</p>
+    </div>
+    <div class="head-actions">
+      <div class="seg" id="units" role="group" aria-label="Units">
+        <button type="button" data-u="metric" class="on">mm · km/h</button>
+        <button type="button" data-u="imperial">in · mph</button>
+      </div>
+      <button id="swap" title="Restore the example setup">Reset</button>
+      <button id="share" class="btn-primary">Copy share link</button>
+      <button id="theme" title="Toggle theme" aria-label="Toggle theme">◐</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="setups">
+      <div class="panel card existing">
+        <div class="card-head">
+          <span class="dot"></span><span class="card-title">Current setup</span>
+          <span class="card-sub" id="sum-e">16×6 ET50</span>
+        </div>
+        <div class="fields">
+          <div class="field"><label>Rim Ø</label><div class="input-row"><input id="e-dia" type="number" value="16" step="0.5"><span class="unit">in</span></div></div>
+          <div class="field"><label>Rim width</label><div class="input-row"><input id="e-width" type="number" value="6" step="0.5"><span class="unit">J</span></div></div>
+          <div class="field"><label>Offset</label><div class="input-row"><input id="e-et" type="number" value="50" step="1"><span class="unit">ET</span></div></div>
+          <div class="field"><label>Tyre width</label><div class="input-row"><input id="e-tyre" type="number" value="225" step="5"><span class="unit">mm</span></div></div>
+          <div class="field span"><label>Profile</label><div class="input-row"><input id="e-profile" type="number" value="45" step="5"><span class="unit">%</span></div></div>
+        </div>
+      </div>
+
+      <div class="panel card new" id="card-n">
+        <div class="card-head">
+          <span class="dot"></span><span class="card-title">New setup</span>
+          <span class="card-sub" id="sum-n">17×8 ET45</span>
+        </div>
+        <div class="fields">
+          <div class="field" data-hl="diameter"><label>Rim Ø</label><div class="input-row"><input id="n-dia" type="number" value="17" step="0.5"><span class="unit">in</span></div></div>
+          <div class="field" data-hl="width"><label>Rim width</label><div class="input-row"><input id="n-width" type="number" value="8" step="0.5"><span class="unit">J</span></div></div>
+          <div class="slider"><input id="n-width-s" type="range" min="5" max="13" step="0.5" value="8" aria-label="New rim width"></div>
+          <div class="field" data-hl="et"><label>Offset</label><div class="input-row"><input id="n-et" type="number" value="45" step="1"><span class="unit">ET</span></div></div>
+          <div class="field" data-hl="width"><label>Tyre width</label><div class="input-row"><input id="n-tyre" type="number" value="235" step="5"><span class="unit">mm</span></div></div>
+          <div class="slider"><input id="n-et-s" type="range" min="-20" max="70" step="1" value="45" aria-label="New offset"></div>
+          <div class="field span" data-hl="sidewall"><label>Profile</label><div class="input-row"><input id="n-profile" type="number" value="50" step="5"><span class="unit">%</span></div></div>
+          <div class="slider"><input id="n-profile-s" type="range" min="20" max="90" step="5" value="50" aria-label="New profile"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="output">
+      <div class="panel verdict">
+        <div class="verdict-row">
+          <div class="vstat val-poke"><span class="k">Poke change</span><span class="v" id="v-poke">+30.4<small>mm</small></span><span class="cap">outer lip vs. current</span></div>
+          <div class="vstat"><span class="k">Inner clearance</span><span class="v" id="v-strut">−20.4<small>mm</small></span><span class="cap" id="v-strut-cap">closer to strut</span></div>
+          <div class="vstat"><span class="k">Ride height</span><span class="v" id="v-height">+35<small>mm</small></span><span class="cap">taller rolling radius</span></div>
+          <div class="vstat" style="justify-content:flex-end;"><span class="k">Fitment</span><span id="v-badge" class="badge warn" style="margin-top:4px;">Aggressive</span></div>
+        </div>
+        <div class="verdict-note" id="note"></div>
+      </div>
+
+      <div class="panel diagram-wrap">
+        <div class="diagram-head">
+          <span class="lbl">Cross-section · looking along the axle</span>
+          <span class="legend"><span class="e"><i></i>Current</span><span class="n"><i></i>New</span></span>
+        </div>
+        <svg id="diagram" viewBox="0 0 480 380" role="img" aria-label="Cross-section comparison of current and new wheel fitment"></svg>
+      </div>
+
+      <div class="panel results">
+        <table>
+          <thead><tr><th>Measurement</th><th class="c-e">Current</th><th class="c-n">New</th><th>Δ</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+
+      <div class="panel gloss" id="gloss">
+        <div class="gloss-head">What the numbers mean <span>hover a term to see where it's measured →</span></div>
+        <dl>
+          <div class="term" data-hl="et"><dt><span class="g-dot"></span>Offset · ET</dt><dd>How far the wheel's mounting face sits from its centreline (mm). Higher ET tucks the wheel in; lower ET pushes it out.</dd></div>
+          <div class="term" data-hl="poke"><dt><span class="g-dot"></span>Poke</dt><dd>How far the outer lip sticks out past the hub face. More poke = more aggressive stance — and more chance of catching the arch.</dd></div>
+          <div class="term" data-hl="inset"><dt><span class="g-dot"></span>Inset</dt><dd>How far the inner lip sits inboard — the room the wheel needs before it fouls the strut, spring or arm.</dd></div>
+          <div class="term" data-hl="width"><dt><span class="g-dot"></span>Rim / tyre width</dt><dd>Barrel width (J) and tyre section width (mm). Together they set how wide the wheel sits between the lips.</dd></div>
+          <div class="term" data-hl="sidewall"><dt><span class="g-dot"></span>Profile · sidewall</dt><dd>Sidewall height as a % of tyre width. Lower profile = shorter sidewall, sharper look, harsher ride.</dd></div>
+          <div class="term" data-hl="diameter"><dt><span class="g-dot"></span>Overall Ø</dt><dd>Full rolling diameter of wheel + tyre. Changing it raises or lowers the car and skews the speedo.</dd></div>
+          <div class="term" data-hl="ride"><dt><span class="g-dot"></span>Ride height</dt><dd>Change in axle height from a taller or shorter tyre — half the change in overall diameter.</dd></div>
+          <div class="term" data-hl="speedo"><dt><span class="g-dot"></span>Speedo error</dt><dd>How wrong the speedo reads once rolling circumference changes. Negative = the car goes faster than it shows.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="flag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <span><strong style="color:var(--ink-dim)">Rolling diameter uses the standard formula</strong> (rim + 2× sidewall) — <em>not</em> stretch-adjusted, so it isn't matched to willtheyfit.com's tyre-stretch model. Poke, inset, offset, ride-height and speedo figures are exact.</span>
+    </div>
+    <div class="flag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+      <span>Estimates only. Never run tyres or wheels they aren't rated for — confirm load, bolt pattern and centre bore before buying.</span>
+    </div>
+  </footer>
+</div>
+
+<div class="toast" id="toast">Link copied</div>
+
+<script>
+(function(){
+  "use strict";
+  var IN = 25.4;
+  var $ = function(id){ return document.getElementById(id); };
+  var fields = ["e-dia","e-width","e-et","e-tyre","e-profile","n-dia","n-width","n-et","n-tyre","n-profile"];
+  var pairs = [["n-width","n-width-s"],["n-et","n-et-s"],["n-profile","n-profile-s"]];
+  var units = "metric";
+  var CUR = null, curHL = null;
+
+  function val(id){ return parseFloat($(id).value) || 0; }
+  function setup(p){ return { dia:val(p+"-dia"), width:val(p+"-width"), et:val(p+"-et"), tyre:val(p+"-tyre"), profile:val(p+"-profile") }; }
+  function calc(s){
+    var rim = s.dia*IN, sidewall = s.tyre*(s.profile/100), D = rim + 2*sidewall;
+    return { dia:s.dia, width:s.width, et:s.et, tyre:s.tyre, rim:rim, sidewall:sidewall, D:D, C:D*Math.PI, poke:(s.width*IN)/2 - s.et, inset:(s.width*IN)/2 + s.et, radius:D/2 };
+  }
+
+  // unit helpers (mm internal)
+  function cv(mm){ return units==="imperial" ? mm/IN : mm; }
+  function uD(){ return units==="imperial" ? "in" : "mm"; }
+  function ddec(base){ return units==="imperial" ? base+1 : base; }
+  function dStr(mm, base, sign){ var v=cv(mm), d=ddec(base); return sign ? (v>=0?"+":"−")+Math.abs(v).toFixed(d) : (v<0?"−":"")+Math.abs(v).toFixed(d); }
+  function dgLabel(mm){ var v=cv(mm); return units==="imperial" ? v.toFixed(1)+'"' : Math.round(v)+"mm"; }
+
+  function cellUnit(u){ return "<span style='color:var(--ink-faint)'> "+u+"</span>"; }
+  function distRow(lab, key, evmm, nvmm, base, absMode){
+    var ev=cv(evmm), nv=cv(nvmm), d=ddec(base), u=uD(), delta=nv-ev, cls="v-d", txt;
+    if (absMode){ txt=nv.toFixed(d)+u; cls+= Math.abs(nv)>0.005?" up":""; }
+    else { txt=(delta>=0?"+":"−")+Math.abs(delta).toFixed(d)+u; cls+= delta>0.005?" up":(delta<-0.005?" down":""); }
+    return "<tr data-hl='"+key+"'><td>"+lab+"</td><td class='v-e'>"+ev.toFixed(d)+cellUnit(u)+"</td><td class='v-n'>"+nv.toFixed(d)+cellUnit(u)+"</td><td class='"+cls+"'>"+txt+"</td></tr>";
+  }
+  function pctRow(lab, key, valp){
+    var cls="v-d"+(valp>0.05?" up":(valp<-0.05?" down":"")), txt=(valp>=0?"+":"−")+Math.abs(valp).toFixed(1)+"%";
+    return "<tr data-hl='"+key+"'><td>"+lab+"</td><td class='v-e'>0.0"+cellUnit("%")+"</td><td class='v-n'>"+valp.toFixed(1)+cellUnit("%")+"</td><td class='"+cls+"'>"+txt+"</td></tr>";
+  }
+  function speedRow(lab, key, base, reading, u){
+    var delta=reading-base, cls="v-d"+(delta>0.05?" up":(delta<-0.05?" down":"")), txt=(delta>=0?"+":"−")+Math.abs(delta).toFixed(1)+u;
+    return "<tr data-hl='"+key+"'><td>"+lab+"</td><td class='v-e'>"+base.toFixed(0)+cellUnit(u)+"</td><td class='v-n'>"+reading.toFixed(1)+cellUnit(u)+"</td><td class='"+cls+"'>"+txt+"</td></tr>";
+  }
+
+  function render(){
+    var se=setup("e"), sn=setup("n"), e=calc(se), n=calc(sn);
+    CUR = { e:e, n:n };
+
+    $("sum-e").textContent = se.dia+"×"+se.width+" ET"+se.et;
+    $("sum-n").textContent = sn.dia+"×"+sn.width+" ET"+sn.et;
+
+    var pokeD=n.poke-e.poke, strutD=n.inset-e.inset, heightD=n.radius-e.radius, speedoErr=(e.C-n.C)/n.C*100;
+
+    $("v-poke").innerHTML = dStr(pokeD,1,true)+"<small>"+uD()+"</small>";
+    $("v-strut").innerHTML = dStr(-strutD,1,true)+"<small>"+uD()+"</small>";
+    $("v-strut-cap").textContent = strutD>=0 ? "closer to strut" : "further from strut";
+    $("v-height").innerHTML = dStr(heightD,0,true)+"<small>"+uD()+"</small>";
+
+    var badge=$("v-badge"), b, ap=Math.abs(pokeD);
+    if (ap<=6){ b="ok"; badge.textContent="Mild"; }
+    else if (ap<=20){ b="ok"; badge.textContent="Moderate"; }
+    else if (ap<=35){ b="warn"; badge.textContent="Aggressive"; }
+    else { b="bad"; badge.textContent="Extreme"; }
+    badge.className = "badge "+b;
+
+    var dirP = pokeD>=0 ? "pokes "+dStr(pokeD,1)+uD()+" further out" : "tucks "+dStr(-pokeD,1)+uD()+" further in";
+    var dirS = strutD>=0 ? "sits "+dStr(strutD,1)+uD()+" closer to the strut" : "sits "+dStr(-strutD,1)+uD()+" further from the strut";
+    $("note").textContent = "The new wheel "+dirP+" and "+dirS+". A visual estimate — real clearance depends on your suspension, camber and arch.";
+
+    var html = "";
+    html += distRow("Overall Ø","diameter", e.D, n.D, 0, false);
+    html += distRow("Circumference","speedo", e.C, n.C, 0, false);
+    html += distRow("Poke (outer)","poke", e.poke, n.poke, 1, false);
+    html += distRow("Inset (inner)","inset", e.inset, n.inset, 1, false);
+    html += pctRow("Speedo error","speedo", speedoErr);
+    var pts = units==="imperial" ? [30,60] : [50,100];
+    var spU = units==="imperial" ? "mph" : "km/h";
+    pts.forEach(function(pt){ html += speedRow("Reads at "+pt+spU,"speedo", pt, pt*e.C/n.C, spU); });
+    html += distRow("Ride height","ride", 0, heightD, 0, true);
+    html += distRow("Arch gap loss","ride", 0, heightD, 0, true);
+    $("rows").innerHTML = html;
+
+    drawDiagram(e, n, curHL);
+  }
+  function redrawHL(){ if (CUR) drawDiagram(CUR.e, CUR.n, curHL); }
+
+  // ---- diagram primitives ----
+  function dimLine(x1, x2, y, color){
+    return '<g stroke="'+color+'"><line x1="'+x1+'" y1="'+y+'" x2="'+x2+'" y2="'+y+'" stroke-width="1"/>'+
+      '<line x1="'+x1+'" y1="'+(y-3)+'" x2="'+x1+'" y2="'+(y+3)+'" stroke-width="1"/>'+
+      '<line x1="'+x2+'" y1="'+(y-3)+'" x2="'+x2+'" y2="'+(y+3)+'" stroke-width="1"/></g>';
+  }
+  function vDim(x, y1, y2, color){
+    return '<g stroke="'+color+'"><line x1="'+x+'" y1="'+y1+'" x2="'+x+'" y2="'+y2+'" stroke-width="1"/>'+
+      '<line x1="'+(x-3)+'" y1="'+y1+'" x2="'+(x+3)+'" y2="'+y1+'" stroke-width="1"/>'+
+      '<line x1="'+(x-3)+'" y1="'+y2+'" x2="'+(x+3)+'" y2="'+y2+'" stroke-width="1"/></g>';
+  }
+  function wheel(m, color, front, hubX, out, sc, groundY){
+    var outerX=hubX+out*m.poke*sc, innerX=hubX-out*m.inset*sc;
+    var x=Math.min(outerX,innerX), w=Math.abs(innerX-outerX), top=groundY-m.D*sc, h=m.D*sc;
+    var g='<g>';
+    g+='<rect x="'+x.toFixed(1)+'" y="'+top.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="10" fill="'+color+'" fill-opacity="'+(front?0.10:0.06)+'" stroke="'+color+'" stroke-width="'+(front?2.4:1.6)+'"'+(front?'':' stroke-dasharray="4 4"')+'/>';
+    var ry=top+m.sidewall*sc, rh=h-m.sidewall*sc*2;
+    if (rh>6) g+='<rect x="'+(x+3).toFixed(1)+'" y="'+ry.toFixed(1)+'" width="'+(w-6).toFixed(1)+'" height="'+rh.toFixed(1)+'" rx="4" fill="none" stroke="'+color+'" stroke-width="1" opacity="0.5"'+(front?'':' stroke-dasharray="3 4"')+'/>';
+    if (front){
+      var nt=Math.max(3,Math.round(w/9));
+      for (var i=0;i<nt;i++){ var tx=x+6+i*((w-12)/(nt-1));
+        g+='<line x1="'+tx.toFixed(1)+'" y1="'+top.toFixed(1)+'" x2="'+tx.toFixed(1)+'" y2="'+(top+5).toFixed(1)+'" stroke="'+color+'" stroke-width="1.4" opacity="0.65"/>';
+        g+='<line x1="'+tx.toFixed(1)+'" y1="'+groundY.toFixed(1)+'" x2="'+tx.toFixed(1)+'" y2="'+(groundY-5).toFixed(1)+'" stroke="'+color+'" stroke-width="1.4" opacity="0.65"/>';
+      }
+    }
+    g+='</g>';
+    return { svg:g, outerX:outerX, innerX:innerX, top:top, x:x, w:w, h:h };
+  }
+  function hub(x, cy, c){
+    return '<g opacity="0.6">'+
+      '<rect x="'+(x-3)+'" y="'+(cy-32)+'" width="6" height="64" rx="2" fill="'+c+'"/>'+
+      '<rect x="'+(x-14)+'" y="'+(cy-14)+'" width="28" height="28" rx="5" fill="'+c+'"/>'+
+      '<line x1="'+(x-24)+'" y1="'+cy+'" x2="'+(x+30)+'" y2="'+cy+'" stroke="'+c+'" stroke-width="2"/></g>';
+  }
+  function suspension(hubX, cy, c){
+    var sx=hubX+104, topY=30, sTop=46, sBot=148, shBot=206, r=16, eyeY=shBot+6;
+    var g='<g stroke="'+c+'" fill="none" stroke-width="2" opacity="0.5" stroke-linecap="round" stroke-linejoin="round">';
+    g+='<rect x="'+(sx-11)+'" y="'+(topY-5)+'" width="22" height="7" rx="2" fill="'+c+'" fill-opacity="0.3" stroke="none"/>'; // top mount
+    g+='<line x1="'+sx+'" y1="'+topY+'" x2="'+sx+'" y2="'+sTop+'"/>';                                                     // rod
+    var loops=7, gap=(sBot-sTop)/loops;
+    for (var i=0;i<=loops;i++){ var yy=sTop+i*gap; g+='<path d="M'+(sx-r)+' '+yy+' Q'+sx+' '+(yy-gap*0.78)+' '+(sx+r)+' '+yy+'"/>'; } // coils
+    g+='<line x1="'+(sx-r)+'" y1="'+sTop+'" x2="'+(sx-r)+'" y2="'+sBot+'"/>';
+    g+='<line x1="'+(sx+r)+'" y1="'+sTop+'" x2="'+(sx+r)+'" y2="'+sBot+'"/>';
+    g+='<rect x="'+(sx-8)+'" y="'+sBot+'" width="16" height="'+(eyeY-sBot)+'" rx="6" fill="'+c+'" fill-opacity="0.18"/>'; // shock body
+    // lower eye — the joint everything meets at
+    g+='<circle cx="'+sx+'" cy="'+eyeY+'" r="5" fill="'+c+'" fill-opacity="0.25"/>';
+    // knuckle: hub upright -> lower eye
+    g+='<line x1="'+(hubX+14)+'" y1="'+cy+'" x2="'+sx+'" y2="'+eyeY+'" stroke-width="6" opacity="0.55"/>';
+    // lower control arm: lower eye -> chassis pivot
+    var px=sx+30, py=eyeY+70;
+    g+='<line x1="'+sx+'" y1="'+eyeY+'" x2="'+px+'" y2="'+py+'" stroke-width="6" opacity="0.55"/>';
+    g+='<circle cx="'+px+'" cy="'+py+'" r="4.5" opacity="0.7"/>';
+    g+='</g>';
+    return g;
+  }
+
+  function drawDiagram(e, n, hl){
+    var W=480, groundY=336, topPad=30;
+    var cs=getComputedStyle(document.documentElement);
+    var cEx=cs.getPropertyValue("--existing").trim(), cNew=cs.getPropertyValue("--new").trim();
+    var cLine=cs.getPropertyValue("--line").trim(), cDim=cs.getPropertyValue("--ink-dim").trim();
+    var cFaint=cs.getPropertyValue("--ink-faint").trim(), cHL=cs.getPropertyValue("--hl").trim();
+
+    var maxD=Math.max(e.D,n.D,560), sc=(groundY-topPad)/maxD, hubX=286, out=-1;
+    var cy=groundY-(n.D/2)*sc;
+
+    var P=[];
+    P.push('<defs><pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="'+cLine+'" stroke-width="0.5" opacity="0.5"/></pattern></defs>');
+    P.push('<rect width="'+W+'" height="380" fill="url(#grid)"/>');
+    P.push('<line x1="14" y1="'+groundY+'" x2="'+(W-14)+'" y2="'+groundY+'" stroke="'+cFaint+'" stroke-width="1.5"/>');
+    for (var gx=18; gx<W-14; gx+=14){ P.push('<line x1="'+gx+'" y1="'+groundY+'" x2="'+(gx-6)+'" y2="'+(groundY+6)+'" stroke="'+cFaint+'" stroke-width="0.75" opacity="0.6"/>'); }
+
+    P.push(suspension(hubX, cy, cFaint));
+
+    var we=wheel(e, cEx, false, hubX, out, sc, groundY);
+    var wn=wheel(n, cNew, true, hubX, out, sc, groundY);
+    P.push(we.svg); P.push(wn.svg);
+    P.push(hub(hubX, cy, cFaint));
+
+    var faceTop=topPad+4;
+    P.push('<line x1="'+hubX+'" y1="'+faceTop+'" x2="'+hubX+'" y2="'+groundY+'" stroke="'+cDim+'" stroke-width="1" stroke-dasharray="2 4" opacity="0.7"/>');
+    P.push('<text x="'+(hubX+4)+'" y="'+(topPad+13)+'" fill="'+cDim+'" font-size="9" font-family="ui-monospace,monospace">HUB FACE</text>');
+
+    var centerX=(wn.outerX+wn.innerX)/2, rimTopY=wn.top+n.sidewall*sc;
+    function lbl(x,y,t,anc){ return '<text x="'+x+'" y="'+y+'" fill="'+cHL+'" font-size="10.5" font-weight="700" font-family="ui-monospace,monospace" text-anchor="'+(anc||"middle")+'">'+t+'</text>'; }
+    function edgeV(x){ return '<line x1="'+x+'" y1="'+wn.top+'" x2="'+x+'" y2="'+groundY+'" stroke="'+cHL+'" stroke-width="3" opacity="0.32"/>'; }
+    function edgeH(y){ return '<line x1="'+wn.outerX+'" y1="'+y+'" x2="'+wn.innerX+'" y2="'+y+'" stroke="'+cHL+'" stroke-width="3" opacity="0.32"/>'; }
+    var faceHL='<line x1="'+hubX+'" y1="'+faceTop+'" x2="'+hubX+'" y2="'+groundY+'" stroke="'+cHL+'" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.75"/>';
+    var hy=Math.min(groundY-14, cy+58);
+
+    if (!hl){
+      if (Math.abs(wn.outerX-hubX)>8){
+        P.push(dimLine(Math.min(wn.outerX,hubX), Math.max(wn.outerX,hubX), 90, cNew));
+        P.push('<text x="'+((wn.outerX+hubX)/2)+'" y="84" text-anchor="middle" fill="'+cNew+'" font-size="10" font-weight="700" font-family="ui-monospace,monospace">poke '+dgLabel(n.poke)+'</text>');
+      }
+      var dxN=24, midY=(wn.top+groundY)/2;
+      P.push('<g stroke="'+cNew+'"><line x1="'+dxN+'" y1="'+wn.top+'" x2="'+dxN+'" y2="'+groundY+'" stroke-width="1"/><line x1="'+(dxN-3)+'" y1="'+wn.top+'" x2="'+(dxN+3)+'" y2="'+wn.top+'" stroke-width="1"/><line x1="'+(dxN-3)+'" y1="'+groundY+'" x2="'+(dxN+3)+'" y2="'+groundY+'" stroke-width="1"/></g>');
+      P.push('<text x="'+(dxN+6)+'" y="'+midY+'" fill="'+cNew+'" font-size="10" font-weight="700" font-family="ui-monospace,monospace" transform="rotate(-90 '+(dxN+6)+' '+midY+')" text-anchor="middle">Ø '+dgLabel(n.D)+'</text>');
+    } else if (hl==="poke"){
+      P.push(faceHL); P.push(edgeV(wn.outerX));
+      P.push(dimLine(Math.min(wn.outerX,hubX), Math.max(wn.outerX,hubX), hy, cHL));
+      P.push(lbl((wn.outerX+hubX)/2, hy-6, "POKE "+dgLabel(n.poke)));
+    } else if (hl==="inset"){
+      P.push(faceHL); P.push(edgeV(wn.innerX));
+      P.push(dimLine(Math.min(hubX,wn.innerX), Math.max(hubX,wn.innerX), hy, cHL));
+      P.push(lbl((hubX+wn.innerX)/2, hy-6, "INSET "+dgLabel(n.inset)));
+    } else if (hl==="et"){
+      P.push('<line x1="'+centerX+'" y1="'+wn.top+'" x2="'+centerX+'" y2="'+groundY+'" stroke="'+cHL+'" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.8"/>');
+      P.push(lbl(centerX, wn.top-4, "CENTRELINE"));
+      P.push(faceHL);
+      P.push(dimLine(Math.min(centerX,hubX), Math.max(centerX,hubX), hy, cHL));
+      P.push(lbl((centerX+hubX)/2, hy-6, "ET "+Math.round(n.et)+"mm"));
+    } else if (hl==="width"){
+      P.push(edgeV(wn.outerX)); P.push(edgeV(wn.innerX));
+      P.push(dimLine(wn.outerX, wn.innerX, wn.top-14, cHL));
+      P.push(lbl(centerX, wn.top-18, "WIDTH "+n.width+"J · "+n.tyre+"mm"));
+    } else if (hl==="sidewall"){
+      P.push(edgeH(wn.top)); P.push(edgeH(rimTopY));
+      P.push(vDim(centerX, wn.top, rimTopY, cHL));
+      P.push(lbl(centerX+8, (wn.top+rimTopY)/2+3, "SIDEWALL "+dgLabel(n.sidewall), "start"));
+    } else if (hl==="diameter"){
+      P.push(edgeH(wn.top)); P.push(edgeH(groundY));
+      P.push(vDim(24, wn.top, groundY, cHL));
+      var my=(wn.top+groundY)/2;
+      P.push('<text x="30" y="'+my+'" fill="'+cHL+'" font-size="10.5" font-weight="700" font-family="ui-monospace,monospace" transform="rotate(-90 30 '+my+')" text-anchor="middle">Ø '+dgLabel(n.D)+'</text>');
+    } else if (hl==="ride"){
+      var rx=Math.min(W-32, wn.innerX+26);
+      P.push('<line x1="'+(rx-18)+'" y1="'+cy+'" x2="'+(rx+8)+'" y2="'+cy+'" stroke="'+cHL+'" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.7"/>');
+      P.push(vDim(rx, cy, groundY, cHL));
+      P.push(lbl(rx+8, (cy+groundY)/2, "RIDE HT "+dgLabel(n.radius), "start"));
+      P.push(lbl(rx-2, cy-5, "AXLE", "end"));
+    } else if (hl==="speedo"){
+      P.push('<rect x="'+wn.x.toFixed(1)+'" y="'+wn.top.toFixed(1)+'" width="'+wn.w.toFixed(1)+'" height="'+wn.h.toFixed(1)+'" rx="10" fill="none" stroke="'+cHL+'" stroke-width="3" opacity="0.6"/>');
+      P.push(lbl(centerX, wn.top-6, "ROLLING CIRC. "+dgLabel(n.C)));
+    }
+
+    $("diagram").innerHTML = P.join("");
+  }
+
+  // ---- wiring ----
+  fields.forEach(function(id){ $(id).addEventListener("input", function(){ syncFrom(id); render(); writeHash(); }); });
+  pairs.forEach(function(p){ $(p[1]).addEventListener("input", function(){ $(p[0]).value=$(p[1]).value; render(); writeHash(); }); });
+  function syncFrom(id){ pairs.forEach(function(p){ if (p[0]===id) $(p[1]).value=$(id).value; }); }
+
+  function delegateHL(el){
+    el.addEventListener("mouseover", function(ev){ var t=ev.target.closest("[data-hl]"); if (t && el.contains(t)){ curHL=t.getAttribute("data-hl"); redrawHL(); } });
+    el.addEventListener("mouseout", function(ev){ var t=ev.target.closest("[data-hl]"); if (t && el.contains(t)){ curHL=null; redrawHL(); } });
+  }
+  delegateHL($("rows")); delegateHL($("gloss")); delegateHL($("card-n"));
+
+  $("units").addEventListener("click", function(ev){
+    var b=ev.target.closest("button"); if (!b) return;
+    units=b.getAttribute("data-u");
+    Array.prototype.forEach.call(this.children, function(c){ c.classList.toggle("on", c===b); });
+    render();
+  });
+
+  function writeHash(){ history.replaceState(null, "", "#"+fields.map(function(id){ return $(id).value; }).join(",")); }
+  function readHash(){ var h=decodeURIComponent(location.hash.replace(/^#/,"")); if (!h) return; var v=h.split(","); if (v.length!==fields.length) return; fields.forEach(function(id,i){ $(id).value=v[i]; syncFrom(id); }); }
+
+  $("share").addEventListener("click", function(){
+    writeHash();
+    if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(function(){ showToast("Link copied"); }, function(){ showToast("Copy failed"); });
+    else showToast("Copy not supported");
+  });
+  function showToast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(function(){ t.classList.remove("show"); }, 1600); }
+
+  var defaults={"e-dia":16,"e-width":6,"e-et":50,"e-tyre":225,"e-profile":45,"n-dia":17,"n-width":8,"n-et":45,"n-tyre":235,"n-profile":50};
+  $("swap").addEventListener("click", function(){ Object.keys(defaults).forEach(function(id){ $(id).value=defaults[id]; syncFrom(id); }); render(); writeHash(); });
+
+  $("theme").addEventListener("click", function(){
+    var cur=document.documentElement.getAttribute("data-theme");
+    var isDark=cur ? cur==="dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", isDark?"light":"dark");
+    render();
+  });
+
+  readHash();
+  pairs.forEach(function(p){ $(p[1]).value=$(p[0]).value; });
+  render();
+})();
+</script>
+</html>
