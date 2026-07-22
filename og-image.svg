@@ -10,7 +10,7 @@
 
   <!-- wordmark -->
   <text x="90" y="300" font-size="130" font-weight="800" letter-spacing="1" fill="#eaf0f6">STANCE<tspan fill="#31c8ff">/</tspan></text>
-  <text x="96" y="366" font-size="34" fill="#8b97a6">Alloy wheel &amp; tyre fitment — poke, offset, rolling radius &amp; speedo error</text>
+  <text x="96" y="366" font-size="34" fill="#8b97a6">Alloy wheel &amp; tire fitment — poke, offset, rolling radius &amp; speedo error</text>
 
   <!-- pill row -->
   <g font-size="26" font-weight="700">

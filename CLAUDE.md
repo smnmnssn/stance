@@ -1,6 +1,6 @@
 # STANCE — project context
 
-A live alloy wheel & tyre fitment calculator. Single self-contained `index.html`
+A live alloy wheel & tire fitment calculator. Single self-contained `index.html`
 (HTML + inline CSS + inline JS, no build step, no dependencies). Runs by opening
 the file in a browser.
 
@@ -23,6 +23,36 @@ shippable piece and the geometry engine the visualizer will reuse.
 - Metric/imperial toggle (mm↔in, km/h↔mph, speed test points 50/100 vs 30/60).
 - Light/dark themes (token-based, `prefers-color-scheme` + `data-theme` override).
 - Share link (encodes all inputs in the URL hash) + copy-to-clipboard toast.
+
+## SEO & discoverability (done)
+- **Domain:** `wheelfitmentcalculator.com` (set in canonical, OG/Twitter, robots,
+  sitemap — the `REPLACE-WITH-YOUR-DOMAIN` token is gone).
+- **Spelling:** primary voice is **American English** ("tire", "center", "speedometer");
+  British "tyre" is woven into the FAQ/prose so the page also ranks for UK/AU searches.
+  `lang="en"` stays neutral. NOTE: internal code identifiers keep the `tyre` spelling
+  (`id="e-tyre"`, JS keys) on purpose — do **not** rename them; change visible text only.
+- **Content for SEO/AEO:** full-width `#how` ("How it works" — every formula written out
+  in crawlable text) and `#faq` (10 Q&As via native `<details>`, zero JS) sections below
+  the tool. These are the main indexable/citable copy — keep key text in static HTML,
+  never move it into JS.
+- **Structured data:** JSON-LD `WebApplication` + `FAQPage` (before the main `<script>`).
+  FAQPage answer text mirrors the visible FAQ — if you edit one, edit both.
+- **Headings:** enriched H1 (visually-hidden keyword tail), visible H2s on the setup cards
+  + glossary, `sr-only` H2s on the verdict/diagram/results panels for a clean outline.
+- **Meta:** keyword-rich `<title>`, `robots` meta (`max-image-preview:large`),
+  OG/Twitter with `og-image.png` + width/height/alt.
+- **robots.txt:** explicitly allows search + AI/answer-engine crawlers (GPTBot, ClaudeBot,
+  PerplexityBot, Google-Extended, etc.) so the page is eligible to be cited.
+- **llms.txt:** AEO summary (formulas + terms) at the repo root, per llmstxt.org.
+
+### Regenerating og-image.png
+`og-image.png` is a real 1200×630 PNG rasterized from `og-image.svg` with
+`@resvg/resvg-js` (NOT a repo dependency — installed in a throwaway scratch dir to keep
+the zero-dependency promise). Rebuild it after editing the SVG:
+```
+npm i @resvg/resvg-js        # in any scratch dir, not the repo
+node -e "const{Resvg}=require('@resvg/resvg-js');const fs=require('fs');const p=new Resvg(fs.readFileSync('og-image.svg'),{fitTo:{mode:'width',value:1200}}).render().asPng();fs.writeFileSync('og-image.png',p)"
+```
 
 ## The math — VERIFIED, do not guess or "improve" without data
 Reverse-engineered from willtheyfit.com screenshots and matched to the exact
@@ -58,17 +88,22 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
 - Static site — no build. Host = drag folder to Netlify, or connect the GitHub
   repo to Netlify/Cloudflare Pages/Vercel for auto-deploy on push (publish dir = root).
 
-## Deploy checklist — MANUAL STEP REQUIRED
-Before/after first deploy, find-and-replace the token **`REPLACE-WITH-YOUR-DOMAIN`**
-across the repo (`index.html`, `robots.txt`, `sitemap.xml`) with the real domain
-(no trailing slash, e.g. `stance.example.com`). Until then, canonical/OG/sitemap
-URLs are placeholders.
+## Deploy checklist
+- **Domain is set** to `wheelfitmentcalculator.com` across `index.html`, `robots.txt`,
+  `sitemap.xml` (canonical, OG/Twitter, sitemap `<loc>`). If the domain ever changes,
+  find-and-replace `wheelfitmentcalculator.com` across the repo (no trailing slash).
+- After first deploy: submit `sitemap.xml` in **Google Search Console** and verify the
+  domain (manual — needs the owner's account).
+- Sanity-check the social preview in a card validator once live (OG image is a PNG now).
 
 ## Roadmap / open items
 - [x] Favicon (`favicon.svg`), `robots.txt`, `sitemap.xml`, OG/Twitter meta added.
-- [ ] Replace `REPLACE-WITH-YOUR-DOMAIN` token once the domain is live.
-- [ ] Submit the site to Google Search Console after deploy.
-- [ ] `og-image.svg` exists; convert to a 1200×630 **PNG** for best social-preview compatibility (some scrapers ignore SVG).
+- [x] Domain set to `wheelfitmentcalculator.com` (placeholder token removed).
+- [x] `og-image.png` — real 1200×630 PNG rendered from the SVG (with width/height/alt meta).
+- [x] JSON-LD (`WebApplication` + `FAQPage`), semantic headings, `#how` + `#faq` copy, `llms.txt`, AI-crawler allows in `robots.txt`.
+- [x] American-English primary spelling with British "tyre" woven in for UK/AU search.
+- [ ] Submit `sitemap.xml` to Google Search Console after deploy (manual — owner's account).
+- [ ] Off-page: backlinks from car forums / Reddit / enthusiast communities (the real ranking lever vs willtheyfit.com).
 - [ ] Analytics: GoatCounter snippet is in `index.html` (commented out) — sign up, add site code, uncomment. Plausible is an alternative.
 - [ ] Optional: make the share link remember the metric/imperial choice.
 - [ ] Fitment verdict thresholds are a placeholder heuristic; a real "will it rub"

@@ -1,0 +1,34 @@
+# STANCE — Wheel & Tire Fitment Calculator
+
+> A free, browser-based wheel and tire fitment calculator. Compare two wheel-and-tire setups and see poke, offset (ET), inset, rolling diameter, rolling radius, ride-height change and speedometer error update live, with a technical cross-section diagram. Runs entirely client-side — nothing entered leaves the browser. "Tire" (American English) and "tyre" (British English) refer to the same part.
+
+## What it does
+- Compares a current setup and a new setup side by side and reports the difference between them.
+- Outputs: poke, inset, offset (ET), overall rolling diameter, rolling radius, circumference, ride-height change, and speedometer error.
+- Supports metric (mm, km/h) and imperial (in, mph) units.
+- Shows a fitment verdict (Mild / Moderate / Aggressive / Extreme) based on the change in poke.
+
+## Formulas used (lengths in millimeters; 1 inch = 25.4 mm)
+- Poke = (rim width in inches × 25.4 ÷ 2) − offset (ET)
+- Inset (backspacing) = (rim width in inches × 25.4 ÷ 2) + offset (ET)
+- Rolling diameter = (rim diameter in inches × 25.4) + 2 × (tire width × profile ÷ 100)
+- Rolling radius = rolling diameter ÷ 2
+- Circumference = rolling diameter × π
+- Ride-height change = (new rolling diameter − old rolling diameter) ÷ 2
+- Speedometer error % = (old circumference − new circumference) ÷ new circumference × 100
+- True speed = indicated speed × old circumference ÷ new circumference
+
+## Key terms
+- Poke: how far the outer lip of the wheel and tire sits past the hub mounting face.
+- Inset / backspacing: how far the inner lip sits inboard; the clearance needed before the wheel fouls the strut, spring or control arm.
+- Offset (ET): distance between the wheel's mounting face and its centerline; a higher ET tucks the wheel in, a lower or negative ET pushes it out.
+- Profile / aspect ratio: sidewall height as a percentage of tire section width.
+
+## Accuracy note
+Rolling diameter uses the standard formula (rim + twice the sidewall) and does not model tire stretch, so overall-diameter figures can differ by a few millimeters from a stretched fitment. Poke, inset, offset, ride-height and speedometer figures are exact.
+
+## Important
+This tool provides estimates. A real-world fit also depends on bolt pattern, center bore, suspension geometry, camber, fender clearance and the tire's load rating. Always verify those before buying wheels or tires.
+
+## Pages
+- Calculator and full guide: https://wheelfitmentcalculator.com/

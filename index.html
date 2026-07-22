@@ -2,22 +2,27 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Free alloy wheel and tyre fitment calculator. Compare poke, offset (ET), inset, rolling radius and speedo error live as you change wheel and tyre sizes.">
-<title>STANCE — Wheel & Tyre Fitment Calculator</title>
-<link rel="canonical" href="https://REPLACE-WITH-YOUR-DOMAIN/">
+<meta name="description" content="Free wheel &amp; tire fitment calculator. Compare two setups and see poke, offset (ET), inset, rolling diameter, ride-height change and speedometer error update live.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<title>Wheel &amp; Tire Fitment Calculator — Poke, Offset &amp; Speedo | STANCE</title>
+<link rel="canonical" href="https://wheelfitmentcalculator.com/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0b0e12" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#e9edf2" media="(prefers-color-scheme: light)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="STANCE">
-<meta property="og:title" content="STANCE — Wheel & Tyre Fitment Calculator">
-<meta property="og:description" content="Compare two wheel setups and see poke, offset (ET), inset, rolling radius, ride-height change and speedo error update live.">
-<meta property="og:url" content="https://REPLACE-WITH-YOUR-DOMAIN/">
-<meta property="og:image" content="https://REPLACE-WITH-YOUR-DOMAIN/og-image.svg">
+<meta property="og:title" content="STANCE — Wheel &amp; Tire Fitment Calculator">
+<meta property="og:description" content="Compare two wheel setups and see poke, offset (ET), inset, rolling diameter, ride-height change and speedometer error update live.">
+<meta property="og:url" content="https://wheelfitmentcalculator.com/">
+<meta property="og:image" content="https://wheelfitmentcalculator.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="STANCE wheel and tire fitment calculator — cross-section diagram showing poke, offset and clearance.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="STANCE — Wheel & Tyre Fitment Calculator">
-<meta name="twitter:description" content="Compare two wheel setups and see poke, offset, rolling radius and speedo error update live.">
-<meta name="twitter:image" content="https://REPLACE-WITH-YOUR-DOMAIN/og-image.svg">
+<meta name="twitter:title" content="STANCE — Wheel &amp; Tire Fitment Calculator">
+<meta name="twitter:description" content="Compare two wheel setups and see poke, offset (ET), inset, rolling diameter, ride-height change and speedometer error update live.">
+<meta name="twitter:image" content="https://wheelfitmentcalculator.com/og-image.png">
+<meta name="twitter:image:alt" content="STANCE wheel and tire fitment calculator preview.">
 <style>
   :root {
     --ground: #0b0e12; --surface: #141922; --surface-2: #1b212c; --line: #28303b; --line-soft: #1e2530;
@@ -184,13 +189,45 @@
   .toast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--ground); font-size: 13px; font-weight: 600; padding: 10px 16px; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 20; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  /* accessibility / heading resets */
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  h1.wordmark, h2.card-title { margin: 0; }
+  h2.gloss-head { margin: 0 0 12px; }
+
+  /* long-form content sections (SEO / AEO copy) */
+  .content { display: flex; flex-direction: column; gap: 18px; margin-top: 18px; }
+  .prose { padding: 22px 24px 24px; }
+  .prose h2 { font-family: var(--font-cond); text-transform: uppercase; letter-spacing: .05em; font-size: clamp(18px, 3vw, 21px); font-weight: 800; margin: 0 0 6px; }
+  .prose > p, .prose h3 + p { max-width: 74ch; }
+  .prose h3 { font-size: 14.5px; font-weight: 700; color: var(--ink); margin: 22px 0 8px; }
+  .prose p { margin: 0 0 12px; color: var(--ink-dim); font-size: 14px; }
+  .prose p.lead { color: var(--ink); font-size: 14.5px; }
+  .prose strong { color: var(--ink); font-weight: 600; }
+  .formula { font-family: var(--font-mono); font-size: 13px; line-height: 1.5; background: var(--surface-2); border: 1px solid var(--line-soft); border-left: 3px solid var(--new); border-radius: 8px; padding: 10px 14px; margin: 0 0 10px; color: var(--ink); overflow-x: auto; }
+  .formula b { color: var(--new); font-weight: 700; }
+  .note-inline { border-left: 3px solid var(--warn); background: color-mix(in srgb, var(--warn) 8%, transparent); padding: 11px 14px; border-radius: 8px; font-size: 13px; color: var(--ink-dim); margin: 4px 0 12px; }
+
+  /* FAQ (native <details>, no JS) */
+  .faq-list { display: flex; flex-direction: column; gap: 8px; }
+  details.faq-item { border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); overflow: hidden; }
+  details.faq-item summary { cursor: pointer; padding: 14px 16px; font-weight: 700; font-size: 14px; color: var(--ink); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  details.faq-item summary::after { content: "+"; font-family: var(--font-mono); color: var(--ink-dim); font-size: 18px; line-height: 1; flex: none; }
+  details.faq-item[open] summary::after { content: "−"; }
+  details.faq-item summary:hover { color: var(--new); }
+  details.faq-item summary:focus-visible { outline: 2px solid var(--new); outline-offset: 2px; border-radius: 6px; }
+  .faq-a { padding: 0 16px 16px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.55; max-width: 80ch; }
+  .faq-a p { margin: 0 0 8px; }
+  .faq-a p:last-child { margin-bottom: 0; }
+  .faq-a code { font-family: var(--font-mono); font-size: 12.5px; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 4px; padding: 1px 5px; color: var(--ink); }
 </style>
 
 <div class="wrap">
   <header>
     <div class="brand">
-      <h1 class="wordmark">Stance<span class="slash">/</span></h1>
-      <p class="tagline"><strong>Alloy wheel &amp; tyre fitment.</strong> Poke, clearance, rolling radius &amp; speedo error — live as you dial it in.</p>
+      <h1 class="wordmark">Stance<span class="slash">/</span><span class="sr-only"> — free wheel &amp; tire fitment calculator</span></h1>
+      <p class="tagline"><strong>Alloy wheel &amp; tire fitment.</strong> Poke, clearance, rolling radius &amp; speedometer error — live as you dial it in.</p>
     </div>
     <div class="head-actions">
       <div class="seg" id="units" role="group" aria-label="Units">
@@ -207,21 +244,21 @@
     <div class="setups">
       <div class="panel card existing">
         <div class="card-head">
-          <span class="dot"></span><span class="card-title">Current setup</span>
+          <span class="dot"></span><h2 class="card-title">Current setup</h2>
           <span class="card-sub" id="sum-e">16×6 ET50</span>
         </div>
         <div class="fields">
           <div class="field"><label>Rim Ø</label><div class="input-row"><input id="e-dia" type="number" value="16" step="0.5"><span class="unit">in</span></div></div>
           <div class="field"><label>Rim width</label><div class="input-row"><input id="e-width" type="number" value="6" step="0.5"><span class="unit">J</span></div></div>
           <div class="field"><label>Offset</label><div class="input-row"><input id="e-et" type="number" value="50" step="1"><span class="unit">ET</span></div></div>
-          <div class="field"><label>Tyre width</label><div class="input-row"><input id="e-tyre" type="number" value="225" step="5"><span class="unit">mm</span></div></div>
+          <div class="field"><label>Tire width</label><div class="input-row"><input id="e-tyre" type="number" value="225" step="5"><span class="unit">mm</span></div></div>
           <div class="field span"><label>Profile</label><div class="input-row"><input id="e-profile" type="number" value="45" step="5"><span class="unit">%</span></div></div>
         </div>
       </div>
 
       <div class="panel card new" id="card-n">
         <div class="card-head">
-          <span class="dot"></span><span class="card-title">New setup</span>
+          <span class="dot"></span><h2 class="card-title">New setup</h2>
           <span class="card-sub" id="sum-n">17×8 ET45</span>
         </div>
         <div class="fields">
@@ -229,7 +266,7 @@
           <div class="field" data-hl="width"><label>Rim width</label><div class="input-row"><input id="n-width" type="number" value="8" step="0.5"><span class="unit">J</span></div></div>
           <div class="slider"><input id="n-width-s" type="range" min="5" max="13" step="0.5" value="8" aria-label="New rim width"></div>
           <div class="field" data-hl="et"><label>Offset</label><div class="input-row"><input id="n-et" type="number" value="45" step="1"><span class="unit">ET</span></div></div>
-          <div class="field" data-hl="width"><label>Tyre width</label><div class="input-row"><input id="n-tyre" type="number" value="235" step="5"><span class="unit">mm</span></div></div>
+          <div class="field" data-hl="width"><label>Tire width</label><div class="input-row"><input id="n-tyre" type="number" value="235" step="5"><span class="unit">mm</span></div></div>
           <div class="slider"><input id="n-et-s" type="range" min="-20" max="70" step="1" value="45" aria-label="New offset"></div>
           <div class="field span" data-hl="sidewall"><label>Profile</label><div class="input-row"><input id="n-profile" type="number" value="50" step="5"><span class="unit">%</span></div></div>
           <div class="slider"><input id="n-profile-s" type="range" min="20" max="90" step="5" value="50" aria-label="New profile"></div>
@@ -239,6 +276,7 @@
 
     <div class="output">
       <div class="panel verdict">
+        <h2 class="sr-only">Fitment summary</h2>
         <div class="verdict-row">
           <div class="vstat val-poke"><span class="k">Poke change</span><span class="v" id="v-poke">+30.4<small>mm</small></span><span class="cap">outer lip vs. current</span></div>
           <div class="vstat"><span class="k">Inner clearance</span><span class="v" id="v-strut">−20.4<small>mm</small></span><span class="cap" id="v-strut-cap">closer to strut</span></div>
@@ -249,6 +287,7 @@
       </div>
 
       <div class="panel diagram-wrap">
+        <h2 class="sr-only">Cross-section diagram</h2>
         <div class="diagram-head">
           <span class="lbl">Cross-section · looking along the axle</span>
           <span class="legend"><span class="e"><i></i>Current</span><span class="n"><i></i>New</span></span>
@@ -257,6 +296,7 @@
       </div>
 
       <div class="panel results">
+        <h2 class="sr-only">Detailed comparison</h2>
         <table>
           <thead><tr><th>Measurement</th><th class="c-e">Current</th><th class="c-n">New</th><th>Δ</th></tr></thead>
           <tbody id="rows"></tbody>
@@ -264,35 +304,149 @@
       </div>
 
       <div class="panel gloss" id="gloss">
-        <div class="gloss-head">What the numbers mean <span>hover a term to see where it's measured →</span></div>
+        <h2 class="gloss-head">What the numbers mean <span>hover a term to see where it's measured →</span></h2>
         <dl>
-          <div class="term" data-hl="et"><dt><span class="g-dot"></span>Offset · ET</dt><dd>How far the wheel's mounting face sits from its centreline (mm). Higher ET tucks the wheel in; lower ET pushes it out.</dd></div>
+          <div class="term" data-hl="et"><dt><span class="g-dot"></span>Offset · ET</dt><dd>How far the wheel's mounting face sits from its centerline (mm). Higher ET tucks the wheel in; lower ET pushes it out.</dd></div>
           <div class="term" data-hl="poke"><dt><span class="g-dot"></span>Poke</dt><dd>How far the outer lip sticks out past the hub face. More poke = more aggressive stance — and more chance of catching the arch.</dd></div>
           <div class="term" data-hl="inset"><dt><span class="g-dot"></span>Inset</dt><dd>How far the inner lip sits inboard — the room the wheel needs before it fouls the strut, spring or arm.</dd></div>
-          <div class="term" data-hl="width"><dt><span class="g-dot"></span>Rim / tyre width</dt><dd>Barrel width (J) and tyre section width (mm). Together they set how wide the wheel sits between the lips.</dd></div>
-          <div class="term" data-hl="sidewall"><dt><span class="g-dot"></span>Profile · sidewall</dt><dd>Sidewall height as a % of tyre width. Lower profile = shorter sidewall, sharper look, harsher ride.</dd></div>
-          <div class="term" data-hl="diameter"><dt><span class="g-dot"></span>Overall Ø</dt><dd>Full rolling diameter of wheel + tyre. Changing it raises or lowers the car and skews the speedo.</dd></div>
-          <div class="term" data-hl="ride"><dt><span class="g-dot"></span>Ride height</dt><dd>Change in axle height from a taller or shorter tyre — half the change in overall diameter.</dd></div>
+          <div class="term" data-hl="width"><dt><span class="g-dot"></span>Rim / tire width</dt><dd>Barrel width (J) and tire section width (mm). Together they set how wide the wheel sits between the lips.</dd></div>
+          <div class="term" data-hl="sidewall"><dt><span class="g-dot"></span>Profile · sidewall</dt><dd>Sidewall height as a % of tire width. Lower profile = shorter sidewall, sharper look, harsher ride.</dd></div>
+          <div class="term" data-hl="diameter"><dt><span class="g-dot"></span>Overall Ø</dt><dd>Full rolling diameter of wheel + tire. Changing it raises or lowers the car and skews the speedo.</dd></div>
+          <div class="term" data-hl="ride"><dt><span class="g-dot"></span>Ride height</dt><dd>Change in axle height from a taller or shorter tire — half the change in overall diameter.</dd></div>
           <div class="term" data-hl="speedo"><dt><span class="g-dot"></span>Speedo error</dt><dd>How wrong the speedo reads once rolling circumference changes. Negative = the car goes faster than it shows.</dd></div>
         </dl>
       </div>
     </div>
   </div>
 
+  <div class="content">
+    <section class="panel prose" id="how">
+      <h2>How the wheel &amp; tire fitment calculator works</h2>
+      <p class="lead">STANCE compares two wheel-and-tire setups and shows exactly how the new one changes your car's stance, clearance and speedometer reading. Every number updates live from standard fitment geometry — no guesswork. Here are the formulas it uses (lengths in millimeters; 1 inch = 25.4 mm). Outside North America a tire is spelled <em>tyre</em>, but the math is identical.</p>
+
+      <h3>Poke and inset — how far the wheel sits out or in</h3>
+      <div class="formula"><b>Poke</b> = (rim width in inches × 25.4 ÷ 2) − offset (ET)</div>
+      <div class="formula"><b>Inset</b> = (rim width in inches × 25.4 ÷ 2) + offset (ET)</div>
+      <p>Poke is how far the outer lip sits past the hub mounting face — more poke means a more aggressive stance and a higher chance of catching the fender. Inset (also called backspacing) is the inner equivalent: the room the wheel needs before it fouls the strut, spring or control arm. A lower offset (ET) or a wider rim both increase poke.</p>
+
+      <h3>Rolling diameter, rolling radius and circumference</h3>
+      <div class="formula"><b>Rolling diameter</b> = (rim diameter in inches × 25.4) + 2 × (tire width × profile ÷ 100)</div>
+      <div class="formula"><b>Rolling radius</b> = rolling diameter ÷ 2 &nbsp;·&nbsp; <b>Circumference</b> = rolling diameter × π</div>
+      <p>A tire's profile (aspect ratio) is its sidewall height as a percentage of its section width, so a 225/45 tire has a sidewall of 225 × 0.45 = 101.25 mm.</p>
+      <p class="note-inline">STANCE uses the standard rolling-diameter formula (rim + twice the sidewall). It does <strong>not</strong> apply a tire-stretch adjustment, so overall-diameter figures can differ by a few millimeters from a heavily stretched fitment. Poke, inset, offset, ride-height and speedometer figures are exact.</p>
+
+      <h3>Ride-height change</h3>
+      <div class="formula"><b>Ride-height change</b> = (new rolling diameter − old rolling diameter) ÷ 2</div>
+      <p>A taller tire raises the axle by half the increase in diameter — and closes the gap to the fender by the same amount. A shorter tire lowers it. Rim size alone doesn't change ride height: go up an inch in wheel but drop the tire profile to keep the same rolling diameter ("plus sizing") and the car sits at exactly the same height.</p>
+
+      <h3>Speedometer error</h3>
+      <div class="formula"><b>Speedometer error %</b> = (old circumference − new circumference) ÷ new circumference × 100</div>
+      <div class="formula"><b>True speed</b> = indicated speed × old circumference ÷ new circumference</div>
+      <p>Your speedometer is calibrated to the original tire's circumference. Fit a larger-diameter tire and the car travels farther per revolution than the speedometer assumes, so you are actually going faster than it shows (a negative error). A smaller-diameter tire does the opposite and reads high.</p>
+    </section>
+
+    <section class="panel prose faq" id="faq">
+      <h2>Wheel &amp; tire fitment — frequently asked questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Will these wheels fit my car?</summary>
+          <div class="faq-a"><p>This calculator estimates how a new wheel and tire setup changes poke, inner clearance, rolling diameter and speedometer accuracy versus your current setup — the fastest way to compare two fitments side by side. It can't guarantee a fit on its own, though: real-world clearance also depends on your bolt pattern, center bore, suspension, camber, fender rolling and ride height. Always confirm those, plus the tire's load rating, before buying.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>What is wheel poke?</summary>
+          <div class="faq-a"><p>Poke is how far the outer face of the wheel and tire sticks out past the hub mounting face. More poke gives a more aggressive stance but raises the chance of the tire catching the fender. STANCE calculates it as <code>poke = (rim width in inches × 25.4 ÷ 2) − offset (ET)</code>.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>What does offset (ET) mean?</summary>
+          <div class="faq-a"><p>Offset, stamped "ET" on a wheel, is the distance in millimeters between the wheel's mounting face and its true centerline. A higher ET tucks the wheel further under the car; a lower or negative ET pushes it outward for more poke. Offset is the single biggest factor in how a wheel sits in the arch.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>What's the difference between offset and backspacing (inset)?</summary>
+          <div class="faq-a"><p>Offset is measured from the wheel's centerline, while inset — also called backspacing — is measured from the inner lip and tells you how much room the wheel needs before it hits the strut, spring or control arm. STANCE shows both at once so you can check outer stance and inner clearance together.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>How does tire size affect my speedometer?</summary>
+          <div class="faq-a"><p>Your speedometer is calibrated to the rolling circumference of the original tire. A larger-diameter tire covers more ground per revolution, so the car goes faster than the speedometer reads; a smaller tire makes it read high. The calculator shows the exact speedometer error percentage and your true speed at any indicated speed.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>What is tire stretch, and does this calculator account for it?</summary>
+          <div class="faq-a"><p>Tire stretch is mounting a narrower tire on a wider rim so the sidewall pulls inward at an angle. STANCE uses the standard rolling-diameter formula (rim + twice the sidewall) and does not model stretch, so overall-diameter numbers can differ by a few millimeters on a heavily stretched setup. Poke, inset, offset, ride-height and speedometer figures are unaffected and exact.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>How do I calculate rolling diameter and rolling radius?</summary>
+          <div class="faq-a"><p>Rolling diameter = <code>(rim diameter in inches × 25.4) + 2 × (tire width × profile ÷ 100)</code>, and rolling radius is half of that. For example, a 225/45 R17 tire measures 17 × 25.4 + 2 × (225 × 0.45) = 431.8 + 202.5 = <strong>634.3 mm</strong> in diameter.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Will bigger wheels change my ride height?</summary>
+          <div class="faq-a"><p>Only overall rolling diameter changes ride height, not rim size on its own. If you go up an inch in wheel but drop the tire profile to keep the same rolling diameter ("plus sizing"), ride height stays the same. STANCE reports the ride-height change as half the difference in rolling diameter between your two setups.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Is this wheel fitment calculator free?</summary>
+          <div class="faq-a"><p>Yes. STANCE is a free, browser-based wheel and tire fitment calculator with no sign-up and no app to install. It works on desktop and mobile, in metric or imperial units, and nothing you enter ever leaves your browser.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Does it work in inches and metric?</summary>
+          <div class="faq-a"><p>Yes — switch between metric (millimeters, km/h) and imperial (inches, mph) at the top of the page. Enter wheel widths and offsets in the units printed on the wheel and every result updates instantly. (Outside North America, "tire" is spelled "tyre" and this tyre size calculator works exactly the same.)</p></div>
+        </details>
+      </div>
+    </section>
+  </div>
+
   <footer>
     <div class="flag">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-      <span><strong style="color:var(--ink-dim)">Rolling diameter uses the standard formula</strong> (rim + 2× sidewall) — <em>not</em> stretch-adjusted, so it isn't matched to willtheyfit.com's tyre-stretch model. Poke, inset, offset, ride-height and speedo figures are exact.</span>
+      <span><strong style="color:var(--ink-dim)">Rolling diameter uses the standard formula</strong> (rim + 2× sidewall) — <em>not</em> stretch-adjusted, so it isn't matched to willtheyfit.com's tire-stretch model. Poke, inset, offset, ride-height and speedometer figures are exact.</span>
     </div>
     <div class="flag">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-      <span>Estimates only. Never run tyres or wheels they aren't rated for — confirm load, bolt pattern and centre bore before buying.</span>
+      <span>Estimates only. Never run tires or wheels they aren't rated for — confirm load, bolt pattern and center bore before buying.</span>
     </div>
   </footer>
 </div>
 
 <div class="toast" id="toast">Link copied</div>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "STANCE — Wheel & Tire Fitment Calculator",
+  "url": "https://wheelfitmentcalculator.com/",
+  "description": "Free wheel and tire fitment calculator. Compare two setups and see poke, offset (ET), inset, rolling diameter, ride-height change and speedometer error update live, with a technical cross-section diagram.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Compare current and new wheel and tire setups live",
+    "Poke, inset and offset (ET) calculation",
+    "Rolling diameter, rolling radius and ride-height change",
+    "Speedometer error percentage and true speed",
+    "Metric and imperial units",
+    "Cross-section fitment diagram"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Will these wheels fit my car?", "acceptedAnswer": { "@type": "Answer", "text": "This calculator estimates how a new wheel and tire setup changes poke, inner clearance, rolling diameter and speedometer accuracy versus your current setup — the fastest way to compare two fitments side by side. It can't guarantee a fit on its own: real-world clearance also depends on your bolt pattern, center bore, suspension, camber, fender rolling and ride height. Always confirm those, plus the tire's load rating, before buying." } },
+    { "@type": "Question", "name": "What is wheel poke?", "acceptedAnswer": { "@type": "Answer", "text": "Poke is how far the outer face of the wheel and tire sticks out past the hub mounting face. More poke gives a more aggressive stance but raises the chance of the tire catching the fender. It is calculated as poke = (rim width in inches × 25.4 ÷ 2) − offset (ET)." } },
+    { "@type": "Question", "name": "What does offset (ET) mean?", "acceptedAnswer": { "@type": "Answer", "text": "Offset, stamped ET on a wheel, is the distance in millimeters between the wheel's mounting face and its true centerline. A higher ET tucks the wheel further under the car; a lower or negative ET pushes it outward for more poke. Offset is the single biggest factor in how a wheel sits in the arch." } },
+    { "@type": "Question", "name": "What's the difference between offset and backspacing (inset)?", "acceptedAnswer": { "@type": "Answer", "text": "Offset is measured from the wheel's centerline, while inset — also called backspacing — is measured from the inner lip and tells you how much room the wheel needs before it hits the strut, spring or control arm. STANCE shows both at once so you can check outer stance and inner clearance together." } },
+    { "@type": "Question", "name": "How does tire size affect my speedometer?", "acceptedAnswer": { "@type": "Answer", "text": "Your speedometer is calibrated to the rolling circumference of the original tire. A larger-diameter tire covers more ground per revolution, so the car goes faster than the speedometer reads; a smaller tire makes it read high. The calculator shows the exact speedometer error percentage and your true speed at any indicated speed." } },
+    { "@type": "Question", "name": "What is tire stretch, and does this calculator account for it?", "acceptedAnswer": { "@type": "Answer", "text": "Tire stretch is mounting a narrower tire on a wider rim so the sidewall pulls inward at an angle. STANCE uses the standard rolling-diameter formula (rim + twice the sidewall) and does not model stretch, so overall-diameter numbers can differ by a few millimeters on a heavily stretched setup. Poke, inset, offset, ride-height and speedometer figures are unaffected and exact." } },
+    { "@type": "Question", "name": "How do I calculate rolling diameter and rolling radius?", "acceptedAnswer": { "@type": "Answer", "text": "Rolling diameter = (rim diameter in inches × 25.4) + 2 × (tire width × profile ÷ 100), and rolling radius is half of that. For example, a 225/45 R17 tire measures 17 × 25.4 + 2 × (225 × 0.45) = 431.8 + 202.5 = 634.3 mm in diameter." } },
+    { "@type": "Question", "name": "Will bigger wheels change my ride height?", "acceptedAnswer": { "@type": "Answer", "text": "Only overall rolling diameter changes ride height, not rim size on its own. If you go up an inch in wheel but drop the tire profile to keep the same rolling diameter (plus sizing), ride height stays the same. STANCE reports the ride-height change as half the difference in rolling diameter between your two setups." } },
+    { "@type": "Question", "name": "Is this wheel fitment calculator free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. STANCE is a free, browser-based wheel and tire fitment calculator with no sign-up and no app to install. It works on desktop and mobile, in metric or imperial units, and nothing you enter ever leaves your browser." } },
+    { "@type": "Question", "name": "Does it work in inches and metric?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — switch between metric (millimeters, km/h) and imperial (inches, mph) at the top of the page. Enter wheel widths and offsets in the units printed on the wheel and every result updates instantly. Outside North America, tire is spelled tyre and this tyre size calculator works exactly the same." } }
+  ]
+}
+</script>
 <script>
 (function(){
   "use strict";
@@ -483,7 +637,7 @@
       P.push(lbl((hubX+wn.innerX)/2, hy-6, "INSET "+dgLabel(n.inset)));
     } else if (hl==="et"){
       P.push('<line x1="'+centerX+'" y1="'+wn.top+'" x2="'+centerX+'" y2="'+groundY+'" stroke="'+cHL+'" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.8"/>');
-      P.push(lbl(centerX, wn.top-4, "CENTRELINE"));
+      P.push(lbl(centerX, wn.top-4, "CENTERLINE"));
       P.push(faceHL);
       P.push(dimLine(Math.min(centerX,hubX), Math.max(centerX,hubX), hy, cHL));
       P.push(lbl((centerX+hubX)/2, hy-6, "ET "+Math.round(n.et)+"mm"));
