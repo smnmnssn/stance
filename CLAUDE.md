@@ -88,10 +88,16 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
   **`--new` electric cyan `#31c8ff` = new setup**. `--hl` gold `#ffcf40` = the
   measurement-highlight colour.
 - Verdict semantics separate: `--ok/--warn/--bad`.
-- Type: **quiet system-sans site title** ("Wheel Fitment Calculator" + a small wheel
-  glyph — de-branded from the old condensed-uppercase STANCE wordmark, 2026-07-22);
-  condensed uppercase for section labels/badges; **monospace tabular** for all numbers;
-  system sans for UI. Fonts are system stacks (Artifact CSP blocks font CDNs).
+- Type: site title in **Space Grotesk 700**, embedded as a base64 woff2 `@font-face` at
+  the top of the `<style>` (self-contained — no font CDN request), with the word
+  "Fitment" in `--new` for a two-tone pop. Condensed uppercase for section labels/badges;
+  **monospace tabular** for all numbers; system sans for UI/body.
+- **Branding (2026 redesign):** `favicon.svg` and the header `.brand-mark` are the same
+  alloy-wheel mark (faint tire ring + rim + 5 spokes + orange hub center = old/new colors).
+  The favicon uses fixed hex on a dark rounded square; the brand-mark uses theme tokens and
+  no square (sits on the page bg). `og-image.svg` → `og-image.png` (1200×630) is that wheel
+  (with a cyan glow) + the two-tone title. Theme toggle = sun/moon SVGs (`#theme .ic-sun`
+  shows in dark → switch to light; `.ic-moon` in light → switch to dark).
 - **Accessibility (WCAG AA) — do not undo:** light-theme accents (`--new` `#0e7490`,
   `--existing` `#c2410c`, `--ok` `#15803d`, `--warn` `#b45309`, `--bad` `#b91c1c`) are
   intentionally *darker* than the bright dark-theme versions so colored text clears
@@ -133,6 +139,7 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
 - [x] Analytics: GoatCounter live at `wheelfitmentcalculator.goatcounter.com` — snippet active at the bottom of `index.html`.
 - [x] Accessibility: Lighthouse a11y fixes — associated form labels, `<main>` landmark, WCAG AA contrast (light accents darkened, faint ink bumped). Perf/Best-Practices/SEO already 100.
 - [x] Mobile/responsive pass — no horizontal clipping 320–414px, graph-first + 2-col verdict, touch targets, iOS zoom fix.
+- [x] Header/branding redesign — embedded Space Grotesk title (two-tone), new alloy-wheel favicon + brand-mark + OG image, sun/moon theme toggle.
 - [ ] Optional: make the share link remember the metric/imperial choice.
 - [ ] Fitment verdict thresholds are a placeholder heuristic; a real "will it rub"
       needs fender/suspension data (the data-moat problem).

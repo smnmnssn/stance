@@ -1,42 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="Arial, sans-serif">
-  <rect width="1200" height="630" fill="#0b0e12"/>
-  <!-- subtle grid -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="Arial, Helvetica, sans-serif">
   <defs>
-    <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#28303b" stroke-width="1" opacity="0.5"/>
-    </pattern>
+    <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#28303b" stroke-width="1" opacity="0.5"/></pattern>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#31c8ff" stop-opacity="0.22"/><stop offset="60%" stop-color="#31c8ff" stop-opacity="0.05"/><stop offset="100%" stop-color="#31c8ff" stop-opacity="0"/></radialGradient>
   </defs>
+  <rect width="1200" height="630" fill="#0b0e12"/>
   <rect width="1200" height="630" fill="url(#g)"/>
-
-  <!-- small wheel mark -->
-  <g transform="translate(92,152)">
-    <line x1="0" y1="-17" x2="0" y2="17" stroke="#ff7a33" stroke-width="4"/>
-    <circle cx="0" cy="0" r="16" fill="none" stroke="#31c8ff" stroke-width="5"/>
-    <circle cx="0" cy="0" r="4.5" fill="#31c8ff"/>
-  </g>
-
-  <!-- plain descriptive title (two lines) -->
-  <text x="90" y="300" font-size="92" font-weight="700" fill="#eaf0f6">Wheel Fitment</text>
-  <text x="90" y="392" font-size="92" font-weight="700" fill="#eaf0f6">Calculator</text>
-
-  <!-- tagline -->
-  <text x="94" y="448" font-size="29" fill="#8b97a6">Poke, offset, rolling radius &amp; speedo error — live.</text>
-
-  <!-- pill row -->
-  <g font-size="26" font-weight="700">
-    <rect x="94" y="490" width="150" height="50" rx="25" fill="rgba(49,200,255,0.14)"/>
-    <text x="169" y="523" text-anchor="middle" fill="#31c8ff">POKE</text>
-    <rect x="260" y="490" width="160" height="50" rx="25" fill="rgba(255,122,51,0.14)"/>
-    <text x="340" y="523" text-anchor="middle" fill="#ff7a33">OFFSET</text>
-    <rect x="436" y="490" width="210" height="50" rx="25" fill="rgba(47,210,122,0.14)"/>
-    <text x="541" y="523" text-anchor="middle" fill="#2fd27a">CLEARANCE</text>
-  </g>
-
-  <!-- cross-section wheel on the right -->
-  <g transform="translate(910,315)">
-    <line x1="0" y1="-210" x2="0" y2="210" stroke="#8b97a6" stroke-width="2" stroke-dasharray="4 8" opacity="0.7"/>
-    <rect x="-70" y="-200" width="140" height="150" rx="24" fill="rgba(49,200,255,0.10)" stroke="#31c8ff" stroke-width="6"/>
-    <rect x="-70" y="50" width="140" height="150" rx="24" fill="rgba(49,200,255,0.10)" stroke="#31c8ff" stroke-width="6"/>
-    <rect x="-40" y="-50" width="80" height="100" rx="10" fill="#5c6675" opacity="0.5"/>
+  <circle cx="968" cy="300" r="300" fill="url(#glow)"/>
+  
+    <circle cx="968" cy="300" r="205" fill="none" stroke="#31c8ff" stroke-width="7" opacity="0.4"/>
+    <circle cx="968" cy="300" r="146" fill="none" stroke="#31c8ff" stroke-width="15"/>
+    <line x1="968.0" y1="244.0" x2="968.0" y2="172.0" stroke="#31c8ff" stroke-width="15" stroke-linecap="round"/><line x1="1021.3" y1="282.7" x2="1089.7" y2="260.4" stroke="#31c8ff" stroke-width="15" stroke-linecap="round"/><line x1="1000.9" y1="345.3" x2="1043.2" y2="403.6" stroke="#31c8ff" stroke-width="15" stroke-linecap="round"/><line x1="935.1" y1="345.3" x2="892.8" y2="403.6" stroke="#31c8ff" stroke-width="15" stroke-linecap="round"/><line x1="914.7" y1="282.7" x2="846.3" y2="260.4" stroke="#31c8ff" stroke-width="15" stroke-linecap="round"/>
+    <circle cx="968" cy="300" r="48" fill="#0b0e12" stroke="#31c8ff" stroke-width="12"/>
+    <circle cx="968" cy="300" r="19" fill="#ff7a33"/>
+  <text x="82" y="250" font-size="86" font-weight="800" letter-spacing="-2" fill="#eaf0f6">Wheel <tspan fill="#31c8ff">Fitment</tspan></text>
+  <text x="82" y="342" font-size="86" font-weight="800" letter-spacing="-2" fill="#eaf0f6">Calculator</text>
+  <text x="86" y="398" font-size="27" fill="#8b97a6">Poke, offset, rolling radius &amp; speedo error — live.</text>
+  <g font-size="25" font-weight="700">
+    <rect x="86" y="436" width="132" height="48" rx="24" fill="rgba(49,200,255,0.13)"/><text x="152" y="467" text-anchor="middle" fill="#31c8ff">POKE</text>
+    <rect x="230" y="436" width="150" height="48" rx="24" fill="rgba(255,122,51,0.13)"/><text x="305" y="467" text-anchor="middle" fill="#ff7a33">OFFSET</text>
+    <rect x="392" y="436" width="196" height="48" rx="24" fill="rgba(47,210,122,0.13)"/><text x="490" y="467" text-anchor="middle" fill="#2fd27a">CLEARANCE</text>
   </g>
 </svg>
