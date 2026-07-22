@@ -8,18 +8,28 @@
   </defs>
   <rect width="1200" height="630" fill="url(#g)"/>
 
-  <!-- wordmark -->
-  <text x="90" y="300" font-size="130" font-weight="800" letter-spacing="1" fill="#eaf0f6">STANCE<tspan fill="#31c8ff">/</tspan></text>
-  <text x="96" y="366" font-size="34" fill="#8b97a6">Alloy wheel &amp; tire fitment — poke, offset, rolling radius &amp; speedo error</text>
+  <!-- small wheel mark -->
+  <g transform="translate(92,152)">
+    <line x1="0" y1="-17" x2="0" y2="17" stroke="#ff7a33" stroke-width="4"/>
+    <circle cx="0" cy="0" r="16" fill="none" stroke="#31c8ff" stroke-width="5"/>
+    <circle cx="0" cy="0" r="4.5" fill="#31c8ff"/>
+  </g>
+
+  <!-- plain descriptive title (two lines) -->
+  <text x="90" y="300" font-size="92" font-weight="700" fill="#eaf0f6">Wheel Fitment</text>
+  <text x="90" y="392" font-size="92" font-weight="700" fill="#eaf0f6">Calculator</text>
+
+  <!-- tagline -->
+  <text x="94" y="448" font-size="29" fill="#8b97a6">Poke, offset, rolling radius &amp; speedo error — live.</text>
 
   <!-- pill row -->
   <g font-size="26" font-weight="700">
-    <rect x="96" y="410" width="150" height="50" rx="25" fill="rgba(49,200,255,0.14)"/>
-    <text x="171" y="443" text-anchor="middle" fill="#31c8ff">POKE</text>
-    <rect x="262" y="410" width="160" height="50" rx="25" fill="rgba(255,122,51,0.14)"/>
-    <text x="342" y="443" text-anchor="middle" fill="#ff7a33">OFFSET</text>
-    <rect x="438" y="410" width="210" height="50" rx="25" fill="rgba(47,210,122,0.14)"/>
-    <text x="543" y="443" text-anchor="middle" fill="#2fd27a">CLEARANCE</text>
+    <rect x="94" y="490" width="150" height="50" rx="25" fill="rgba(49,200,255,0.14)"/>
+    <text x="169" y="523" text-anchor="middle" fill="#31c8ff">POKE</text>
+    <rect x="260" y="490" width="160" height="50" rx="25" fill="rgba(255,122,51,0.14)"/>
+    <text x="340" y="523" text-anchor="middle" fill="#ff7a33">OFFSET</text>
+    <rect x="436" y="490" width="210" height="50" rx="25" fill="rgba(47,210,122,0.14)"/>
+    <text x="541" y="523" text-anchor="middle" fill="#2fd27a">CLEARANCE</text>
   </g>
 
   <!-- cross-section wheel on the right -->

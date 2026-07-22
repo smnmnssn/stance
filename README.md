@@ -1,4 +1,4 @@
-# STANCE — Wheel & Tire Fitment Calculator
+# Wheel & Tire Fitment Calculator
 
 Live at **https://wheelfitmentcalculator.com/**
 

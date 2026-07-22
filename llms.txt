@@ -1,4 +1,4 @@
-# STANCE — Wheel & Tire Fitment Calculator
+# Wheel & Tire Fitment Calculator
 
 > A free, browser-based wheel and tire fitment calculator. Compare two wheel-and-tire setups and see poke, offset (ET), inset, rolling diameter, rolling radius, ride-height change and speedometer error update live, with a technical cross-section diagram. Runs entirely client-side — nothing entered leaves the browser. "Tire" (American English) and "tyre" (British English) refer to the same part.
 

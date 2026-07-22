@@ -5,9 +5,15 @@ A live alloy wheel & tire fitment calculator. Single self-contained `index.html`
 the file in a browser.
 
 **Origin:** built to be a better-looking, more useful version of
-`willtheyfit.com` (Driftworks' fitment calculator). Long-term product idea is a
-wheel *visualizer* ("see these wheels on my car"); this calculator is the first
-shippable piece and the geometry engine the visualizer will reuse.
+`willtheyfit.com` (Driftworks' fitment calculator).
+
+**Naming / direction (updated 2026-07-22):** the public site is now plainly named
+**"Wheel Fitment Calculator"** (matches the domain) — the old flashy "STANCE"
+wordmark was **removed on purpose**. "stance" survives only as the repo/folder name
+and codename. The earlier wheel-*visualizer* endgame ("see these wheels on my car")
+is **shelved by owner decision**: scope is deliberately just this calculator, kept
+utilitarian rather than a brand. Don't reintroduce STANCE branding or the visualizer
+without a fresh ask.
 
 ## Current state (done)
 - Two setups (Current / New) with live inputs — no "Calculate" button.
@@ -37,8 +43,9 @@ shippable piece and the geometry engine the visualizer will reuse.
   never move it into JS.
 - **Structured data:** JSON-LD `WebApplication` + `FAQPage` (before the main `<script>`).
   FAQPage answer text mirrors the visible FAQ — if you edit one, edit both.
-- **Headings:** enriched H1 (visually-hidden keyword tail), visible H2s on the setup cards
-  + glossary, `sr-only` H2s on the verdict/diagram/results panels for a clean outline.
+- **Headings:** H1 is the literal keyword "Wheel Fitment Calculator" (the site title
+  itself), visible H2s on the setup cards + glossary, `sr-only` H2s on the
+  verdict/diagram/results panels for a clean outline.
 - **Meta:** keyword-rich `<title>`, `robots` meta (`max-image-preview:large`),
   OG/Twitter with `og-image.png` + width/height/alt.
 - **robots.txt:** explicitly allows search + AI/answer-engine crawlers (GPTBot, ClaudeBot,
@@ -80,8 +87,10 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
   **`--new` electric cyan `#31c8ff` = new setup**. `--hl` gold `#ffcf40` = the
   measurement-highlight colour.
 - Verdict semantics separate: `--ok/--warn/--bad`.
-- Type: condensed uppercase for wordmark/labels, **monospace tabular** for all
-  numbers, system sans for UI. Fonts are system stacks (Artifact CSP blocks font CDNs).
+- Type: **quiet system-sans site title** ("Wheel Fitment Calculator" + a small wheel
+  glyph — de-branded from the old condensed-uppercase STANCE wordmark, 2026-07-22);
+  condensed uppercase for section labels/badges; **monospace tabular** for all numbers;
+  system sans for UI. Fonts are system stacks (Artifact CSP blocks font CDNs).
 
 ## Deploy
 - GitHub: https://github.com/smnmnssn/stance.git  (branch `main`)
@@ -102,10 +111,11 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
 - [x] `og-image.png` — real 1200×630 PNG rendered from the SVG (with width/height/alt meta).
 - [x] JSON-LD (`WebApplication` + `FAQPage`), semantic headings, `#how` + `#faq` copy, `llms.txt`, AI-crawler allows in `robots.txt`.
 - [x] American-English primary spelling with British "tyre" woven in for UK/AU search.
+- [x] De-branded (2026-07-22): removed the STANCE wordmark; site is now plainly "Wheel Fitment Calculator" across the header, `<title>`, OG image and JSON-LD.
 - [ ] Submit `sitemap.xml` to Google Search Console after deploy (manual — owner's account).
 - [ ] Off-page: backlinks from car forums / Reddit / enthusiast communities (the real ranking lever vs willtheyfit.com).
 - [ ] Analytics: GoatCounter snippet is in `index.html` (commented out) — sign up, add site code, uncomment. Plausible is an alternative.
 - [ ] Optional: make the share link remember the metric/imperial choice.
 - [ ] Fitment verdict thresholds are a placeholder heuristic; a real "will it rub"
       needs fender/suspension data (the data-moat problem).
-- [ ] Bigger picture: the "upload a photo of your car" visualizer, built on this engine.
+- [~] Visualizer endgame ("upload a photo of your car") — **shelved** by owner decision (2026-07-22); scope is deliberately just the calculator. Don't resume without a fresh ask.
