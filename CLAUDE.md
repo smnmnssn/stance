@@ -114,7 +114,7 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
 - [x] De-branded (2026-07-22): removed the STANCE wordmark; site is now plainly "Wheel Fitment Calculator" across the header, `<title>`, OG image and JSON-LD.
 - [ ] Submit `sitemap.xml` to Google Search Console after deploy (manual — owner's account).
 - [ ] Off-page: backlinks from car forums / Reddit / enthusiast communities (the real ranking lever vs willtheyfit.com).
-- [ ] Analytics: GoatCounter snippet is in `index.html` (commented out) — sign up, add site code, uncomment. Plausible is an alternative.
+- [x] Analytics: GoatCounter live at `wheelfitmentcalculator.goatcounter.com` — snippet active at the bottom of `index.html`.
 - [ ] Optional: make the share link remember the metric/imperial choice.
 - [ ] Fitment verdict thresholds are a placeholder heuristic; a real "will it rub"
       needs fender/suspension data (the data-moat problem).
