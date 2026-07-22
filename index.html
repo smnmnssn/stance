@@ -72,7 +72,7 @@
 
   header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
   .brand { display: flex; align-items: center; gap: 13px; }
-  .brand-mark { width: 40px; height: 40px; flex: none; }
+  .brand-mark { width: 54px; height: 54px; flex: none; }
   .brand-text { display: flex; flex-direction: column; gap: 3px; }
   .site-title { font-family: 'Space Grotesk', var(--font-ui); font-weight: 700; font-size: clamp(22px, 4.4vw, 31px); letter-spacing: -0.02em; line-height: 1.02; margin: 0; color: var(--ink); }
   .site-title .ttl-accent { color: var(--new); }
@@ -614,7 +614,6 @@
     var rx=10, sw=m.sidewall*sc, ry=top+sw, rh=h-sw*2;
     var g='<g>';
     if (front){
-      g+='<g filter="url(#wglow)" opacity="0.5"><rect x="'+x.toFixed(1)+'" y="'+top.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="'+rx+'" fill="none" stroke="'+color+'" stroke-width="3"/></g>';
       g+='<rect x="'+x.toFixed(1)+'" y="'+top.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="'+rx+'" fill="url(#tireGrad)" stroke="'+color+'" stroke-width="2.4"/>';
       if (rh>10) g+='<rect x="'+(x+3).toFixed(1)+'" y="'+ry.toFixed(1)+'" width="'+(w-6).toFixed(1)+'" height="'+rh.toFixed(1)+'" rx="4" fill="none" stroke="'+color+'" stroke-width="1" opacity="0.42"/>';
       var nt=Math.max(3,Math.round(w/8));
@@ -673,13 +672,10 @@
     var P=[];
     P.push('<defs>'
       +'<pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="'+cLine+'" stroke-width="0.5" opacity="0.5"/></pattern>'
-      +'<radialGradient id="bgGlow"><stop offset="0" stop-color="'+cNew+'" stop-opacity="0.1"/><stop offset="1" stop-color="'+cNew+'" stop-opacity="0"/></radialGradient>'
       +'<linearGradient id="tireGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+cNew+'" stop-opacity="0.2"/><stop offset="0.5" stop-color="'+cNew+'" stop-opacity="0.05"/><stop offset="1" stop-color="'+cNew+'" stop-opacity="0.14"/></linearGradient>'
       +'<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+cFaint+'" stop-opacity="0.5"/><stop offset="1" stop-color="'+cFaint+'" stop-opacity="0.2"/></linearGradient>'
-      +'<filter id="wglow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"/></filter>'
       +'</defs>');
     P.push('<rect width="'+W+'" height="380" fill="url(#grid)"/>');
-    P.push('<ellipse cx="'+(hubX+12)+'" cy="'+cy.toFixed(1)+'" rx="160" ry="175" fill="url(#bgGlow)"/>');
     P.push('<line x1="14" y1="'+groundY+'" x2="'+(W-14)+'" y2="'+groundY+'" stroke="'+cFaint+'" stroke-width="1.5"/>');
     for (var gx=18; gx<W-14; gx+=14){ P.push('<line x1="'+gx+'" y1="'+groundY+'" x2="'+(gx-6)+'" y2="'+(groundY+6)+'" stroke="'+cFaint+'" stroke-width="0.75" opacity="0.6"/>'); }
     P.push('<text x="'+(W/2)+'" y="'+(groundY+19)+'" text-anchor="middle" fill="'+cDim+'" font-size="9" letter-spacing="1.5" font-family="ui-monospace,monospace">ROAD</text>');
