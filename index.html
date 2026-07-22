@@ -92,8 +92,9 @@
   .seg button:hover { color: var(--ink); border-color: transparent; }
   .seg button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.28); }
 
-  .grid { display: grid; grid-template-columns: 340px 1fr; gap: 18px; align-items: start; }
-  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+  .grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 18px; align-items: start; }
+  .grid > *, .output > *, .setups > * { min-width: 0; }
+  @media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
   .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
 
   .setups { display: flex; flex-direction: column; gap: 14px; }
@@ -228,6 +229,37 @@
   .faq-a p { margin: 0 0 8px; }
   .faq-a p:last-child { margin-bottom: 0; }
   .faq-a code { font-family: var(--font-mono); font-size: 12.5px; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 4px; padding: 1px 5px; color: var(--ink); }
+
+  /* ---- responsive / touch ---- */
+  img, svg, table { max-width: 100%; }
+  .diagram-head { flex-wrap: wrap; }
+  @media (max-width: 600px) {
+    .wrap { padding: 20px 14px 52px; }
+    header { gap: 12px; margin-bottom: 18px; }
+    .head-actions { width: 100%; }
+    .card { padding: 14px 14px 16px; }
+    .input-row input { font-size: 16px; }            /* prevent iOS zoom-on-focus */
+    .verdict { padding: 16px; }
+    .verdict-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+    .diagram-head { padding: 10px 12px 2px; gap: 4px 12px; }
+    .diagram-head .lbl { font-size: 11px; }
+    .gloss { padding: 14px 14px 16px; }
+    .prose { padding: 18px 16px; }
+    .content { gap: 14px; margin-top: 14px; }
+    th, td { padding: 8px 6px; font-size: 12px; }
+    thead th { font-size: 11px; }
+    th:first-child, td:first-child { font-size: 12px; }
+    .formula { font-size: 12px; padding: 10px 12px; }
+  }
+  @media (pointer: coarse) {
+    button, .btn { min-height: 40px; }
+    .seg button { min-height: 34px; }
+    .input-row input { padding: 10px 0; }
+    input[type=range].mini { height: 26px; }
+    input[type=range].mini::-webkit-slider-thumb { width: 18px; height: 18px; margin-top: -7.5px; }
+    input[type=range].mini::-moz-range-thumb { width: 18px; height: 18px; }
+    .gloss-head span { display: none; }             /* "hover" hint is meaningless on touch */
+  }
 </style>
 
 <div class="wrap">
@@ -302,7 +334,7 @@
           <div class="vstat val-poke"><span class="k">Poke change</span><span class="v" id="v-poke">+30.4<small>mm</small></span><span class="cap">outer lip vs. old</span></div>
           <div class="vstat"><span class="k">Inner clearance</span><span class="v" id="v-strut">−20.4<small>mm</small></span><span class="cap" id="v-strut-cap">closer to strut</span></div>
           <div class="vstat"><span class="k">Ride height</span><span class="v" id="v-height">+35<small>mm</small></span><span class="cap">taller rolling radius</span></div>
-          <div class="vstat" style="justify-content:flex-end;"><span class="k">Fitment</span><span id="v-badge" class="badge warn" style="margin-top:4px;">Aggressive</span></div>
+          <div class="vstat"><span class="k">Fitment</span><span id="v-badge" class="badge warn" style="margin-top:4px;">Aggressive</span></div>
         </div>
         <div class="verdict-note" id="note"></div>
       </div>

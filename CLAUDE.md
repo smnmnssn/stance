@@ -100,6 +100,13 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
   in `<main>`. Fitment badges use a solid `--surface-2` fill (NOT a color tint) so the
   colored badge text stays ≥4.5:1. Lighthouse: Perf/Best-Practices/SEO 100, Accessibility
   fixed to pass.
+- **Responsive (mobile) — do not undo:** the grid uses `minmax(0, 1fr)` and grid/flex
+  children get `min-width: 0` so the nowrap results table and diagram header can't force
+  horizontal **page** overflow — they scroll/wrap inside their own box instead. Mobile
+  block at `≤600px` (graph-first order, 2-col verdict, tightened padding); `.input-row
+  input` is bumped to 16px on mobile to stop iOS zoom-on-focus. `@media (pointer: coarse)`
+  enlarges slider thumbs + tap targets and hides the "hover" glossary hint (meaningless on
+  touch). Verified overflow-free 320–414px via headless render.
 
 ## Deploy
 - GitHub: https://github.com/smnmnssn/stance.git  (branch `main`)
@@ -125,6 +132,7 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
 - [ ] Off-page: backlinks from car forums / Reddit / enthusiast communities (the real ranking lever vs willtheyfit.com).
 - [x] Analytics: GoatCounter live at `wheelfitmentcalculator.goatcounter.com` — snippet active at the bottom of `index.html`.
 - [x] Accessibility: Lighthouse a11y fixes — associated form labels, `<main>` landmark, WCAG AA contrast (light accents darkened, faint ink bumped). Perf/Best-Practices/SEO already 100.
+- [x] Mobile/responsive pass — no horizontal clipping 320–414px, graph-first + 2-col verdict, touch targets, iOS zoom fix.
 - [ ] Optional: make the share link remember the metric/imperial choice.
 - [ ] Fitment verdict thresholds are a placeholder heuristic; a real "will it rub"
       needs fender/suspension data (the data-moat problem).
