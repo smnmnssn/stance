@@ -102,7 +102,11 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
   The favicon uses fixed hex on a dark rounded square; the brand-mark uses theme tokens and
   no square (sits on the page bg). `og-image.svg` → `og-image.png` (1200×630) is that wheel
   (with a cyan glow) + the two-tone title. Theme toggle = sun/moon SVGs (`#theme .ic-sun`
-  shows in dark → switch to light; `.ic-moon` in light → switch to dark).
+  shows in dark → switch to light; `.ic-moon` in light → switch to dark). The favicon
+  ships in **multiple formats** for Google Search + browser coverage: `favicon.ico`
+  (16/32/48, Google's default fallback), `favicon.svg`, `favicon-96.png`,
+  `apple-touch-icon.png` — all rasterized from `favicon.svg` (resvg + png-to-ico). If the
+  wheel mark changes, regenerate them.
 - **Accessibility (WCAG AA) — do not undo:** light-theme accents (`--new` `#0e7490`,
   `--existing` `#c2410c`, `--ok` `#15803d`, `--warn` `#b45309`, `--bad` `#b91c1c`) are
   intentionally *darker* than the bright dark-theme versions so colored text clears
