@@ -96,7 +96,9 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
   intentionally *darker* than the bright dark-theme versions so colored text clears
   4.5:1 on white — don't lighten them back. `--ink-faint` was bumped in both themes
   for the same reason. Every number input has `<label for=…>`; main content is wrapped
-  in `<main>`. Lighthouse: Perf/Best-Practices/SEO 100, Accessibility fixed to pass.
+  in `<main>`. Fitment badges use a solid `--surface-2` fill (NOT a color tint) so the
+  colored badge text stays ≥4.5:1. Lighthouse: Perf/Best-Practices/SEO 100, Accessibility
+  fixed to pass.
 
 ## Deploy
 - GitHub: https://github.com/smnmnssn/stance.git  (branch `main`)

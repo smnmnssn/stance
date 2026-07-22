@@ -137,9 +137,9 @@
   .vstat .cap { font-size: 11.5px; color: var(--ink-dim); }
   .val-poke .v { color: var(--new); }
   .badge { font-family: var(--font-mono); font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; letter-spacing: .02em; }
-  .badge.ok { color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, transparent); }
-  .badge.warn { color: var(--warn); background: color-mix(in srgb, var(--warn) 16%, transparent); }
-  .badge.bad { color: var(--bad); background: color-mix(in srgb, var(--bad) 16%, transparent); }
+  .badge.ok { color: var(--ok); background: var(--surface-2); border: 1px solid color-mix(in srgb, var(--ok) 32%, transparent); }
+  .badge.warn { color: var(--warn); background: var(--surface-2); border: 1px solid color-mix(in srgb, var(--warn) 32%, transparent); }
+  .badge.bad { color: var(--bad); background: var(--surface-2); border: 1px solid color-mix(in srgb, var(--bad) 32%, transparent); }
   .badge::before { content:""; width:7px; height:7px; border-radius:50%; background: currentColor; }
   .verdict-note { font-size: 12.5px; color: var(--ink-dim); border-top: 1px solid var(--line-soft); padding-top: 12px; }
 
@@ -567,10 +567,11 @@
     g+='</g>';
     return { svg:g, outerX:outerX, innerX:innerX, top:top, x:x, w:w, h:h };
   }
-  function hub(x, cy, c){
+  function hub(x, cy, c, R){
+    var discH=R*1.25, discW=8, hubH=R*0.62, hubW=30;
     return '<g opacity="0.6">'+
-      '<rect x="'+(x-3)+'" y="'+(cy-32)+'" width="6" height="64" rx="2" fill="'+c+'"/>'+
-      '<rect x="'+(x-14)+'" y="'+(cy-14)+'" width="28" height="28" rx="5" fill="'+c+'"/>'+
+      '<rect x="'+(x-discW/2)+'" y="'+(cy-discH/2).toFixed(1)+'" width="'+discW+'" height="'+discH.toFixed(1)+'" rx="3" fill="'+c+'"/>'+
+      '<rect x="'+(x-hubW/2)+'" y="'+(cy-hubH/2).toFixed(1)+'" width="'+hubW+'" height="'+hubH.toFixed(1)+'" rx="6" fill="'+c+'"/>'+
       '<line x1="'+(x-24)+'" y1="'+cy+'" x2="'+(x+30)+'" y2="'+cy+'" stroke="'+c+'" stroke-width="2"/></g>';
   }
   function suspension(hubX, cy, c){
@@ -587,10 +588,8 @@
     g+='<circle cx="'+sx+'" cy="'+eyeY+'" r="5" fill="'+c+'" fill-opacity="0.25"/>';
     // knuckle: hub upright -> lower eye
     g+='<line x1="'+(hubX+14)+'" y1="'+cy+'" x2="'+sx+'" y2="'+eyeY+'" stroke-width="6" opacity="0.55"/>';
-    // lower control arm: lower eye -> chassis pivot
-    var px=sx+30, py=eyeY+70;
-    g+='<line x1="'+sx+'" y1="'+eyeY+'" x2="'+px+'" y2="'+py+'" stroke-width="6" opacity="0.55"/>';
-    g+='<circle cx="'+px+'" cy="'+py+'" r="4.5" opacity="0.7"/>';
+    // lower control arm: hub back -> top of shock body (forms |< with the knuckle)
+    g+='<line x1="'+(hubX+14)+'" y1="'+cy+'" x2="'+sx+'" y2="'+sBot+'" stroke-width="6" opacity="0.55"/>';
     g+='</g>';
     return g;
   }
@@ -616,7 +615,7 @@
     var we=wheel(e, cEx, false, hubX, out, sc, groundY);
     var wn=wheel(n, cNew, true, hubX, out, sc, groundY);
     P.push(we.svg); P.push(wn.svg);
-    P.push(hub(hubX, cy, cFaint));
+    P.push(hub(hubX, cy, cFaint, (n.D/2)*sc));
 
     var faceTop=topPad+4;
     P.push('<line x1="'+hubX+'" y1="'+faceTop+'" x2="'+hubX+'" y2="'+groundY+'" stroke="'+cDim+'" stroke-width="1" stroke-dasharray="2 4" opacity="0.7"/>');
