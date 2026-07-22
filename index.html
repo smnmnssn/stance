@@ -611,26 +611,38 @@
   function wheel(m, color, front, hubX, out, sc, groundY){
     var outerX=hubX+out*m.poke*sc, innerX=hubX-out*m.inset*sc;
     var x=Math.min(outerX,innerX), w=Math.abs(innerX-outerX), top=groundY-m.D*sc, h=m.D*sc;
+    var rx=10, sw=m.sidewall*sc, ry=top+sw, rh=h-sw*2;
     var g='<g>';
-    g+='<rect x="'+x.toFixed(1)+'" y="'+top.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="10" fill="'+color+'" fill-opacity="'+(front?0.10:0.06)+'" stroke="'+color+'" stroke-width="'+(front?2.4:1.6)+'"'+(front?'':' stroke-dasharray="4 4"')+'/>';
-    var ry=top+m.sidewall*sc, rh=h-m.sidewall*sc*2;
-    if (rh>6) g+='<rect x="'+(x+3).toFixed(1)+'" y="'+ry.toFixed(1)+'" width="'+(w-6).toFixed(1)+'" height="'+rh.toFixed(1)+'" rx="4" fill="none" stroke="'+color+'" stroke-width="1" opacity="0.5"'+(front?'':' stroke-dasharray="3 4"')+'/>';
     if (front){
-      var nt=Math.max(3,Math.round(w/9));
-      for (var i=0;i<nt;i++){ var tx=x+6+i*((w-12)/(nt-1));
-        g+='<line x1="'+tx.toFixed(1)+'" y1="'+top.toFixed(1)+'" x2="'+tx.toFixed(1)+'" y2="'+(top+5).toFixed(1)+'" stroke="'+color+'" stroke-width="1.4" opacity="0.65"/>';
-        g+='<line x1="'+tx.toFixed(1)+'" y1="'+groundY.toFixed(1)+'" x2="'+tx.toFixed(1)+'" y2="'+(groundY-5).toFixed(1)+'" stroke="'+color+'" stroke-width="1.4" opacity="0.65"/>';
+      g+='<g filter="url(#wglow)" opacity="0.5"><rect x="'+x.toFixed(1)+'" y="'+top.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="'+rx+'" fill="none" stroke="'+color+'" stroke-width="3"/></g>';
+      g+='<rect x="'+x.toFixed(1)+'" y="'+top.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="'+rx+'" fill="url(#tireGrad)" stroke="'+color+'" stroke-width="2.4"/>';
+      if (rh>10){
+        g+='<rect x="'+(x+3).toFixed(1)+'" y="'+ry.toFixed(1)+'" width="'+(w-6).toFixed(1)+'" height="'+rh.toFixed(1)+'" rx="4" fill="'+color+'" fill-opacity="0.05" stroke="'+color+'" stroke-width="1.1" opacity="0.7"/>';
+        g+='<line x1="'+(x+2.5).toFixed(1)+'" y1="'+ry.toFixed(1)+'" x2="'+(x+w-2.5).toFixed(1)+'" y2="'+ry.toFixed(1)+'" stroke="'+color+'" stroke-width="1.6" opacity="0.55"/>';
+        g+='<line x1="'+(x+2.5).toFixed(1)+'" y1="'+(ry+rh).toFixed(1)+'" x2="'+(x+w-2.5).toFixed(1)+'" y2="'+(ry+rh).toFixed(1)+'" stroke="'+color+'" stroke-width="1.6" opacity="0.55"/>';
       }
+      var nt=Math.max(3,Math.round(w/8));
+      for (var i=0;i<nt;i++){ var tx=x+6+i*((w-12)/(nt-1));
+        g+='<line x1="'+tx.toFixed(1)+'" y1="'+top.toFixed(1)+'" x2="'+tx.toFixed(1)+'" y2="'+(top+5.5).toFixed(1)+'" stroke="'+color+'" stroke-width="1.7" stroke-linecap="round" opacity="0.7"/>';
+        g+='<line x1="'+tx.toFixed(1)+'" y1="'+groundY.toFixed(1)+'" x2="'+tx.toFixed(1)+'" y2="'+(groundY-5.5).toFixed(1)+'" stroke="'+color+'" stroke-width="1.7" stroke-linecap="round" opacity="0.7"/>';
+      }
+    } else {
+      g+='<rect x="'+x.toFixed(1)+'" y="'+top.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="'+rx+'" fill="'+color+'" fill-opacity="0.05" stroke="'+color+'" stroke-width="1.7" stroke-dasharray="5 4"/>';
+      if (rh>10) g+='<rect x="'+(x+3).toFixed(1)+'" y="'+ry.toFixed(1)+'" width="'+(w-6).toFixed(1)+'" height="'+rh.toFixed(1)+'" rx="4" fill="none" stroke="'+color+'" stroke-width="1" opacity="0.38" stroke-dasharray="3 4"/>';
     }
     g+='</g>';
     return { svg:g, outerX:outerX, innerX:innerX, top:top, x:x, w:w, h:h };
   }
   function hub(x, cy, c, R){
     var discH=R*1.05, discW=8, hubH=R*0.42, hubW=30;
-    return '<g opacity="0.6">'+
-      '<rect x="'+(x-discW/2)+'" y="'+(cy-discH/2).toFixed(1)+'" width="'+discW+'" height="'+discH.toFixed(1)+'" rx="3" fill="'+c+'"/>'+
-      '<rect x="'+(x-hubW/2)+'" y="'+(cy-hubH/2).toFixed(1)+'" width="'+hubW+'" height="'+hubH.toFixed(1)+'" rx="6" fill="'+c+'"/>'+
-      '<line x1="'+(x-24)+'" y1="'+cy+'" x2="'+(x+30)+'" y2="'+cy+'" stroke="'+c+'" stroke-width="2"/></g>';
+    var g='<g>';
+    g+='<line x1="'+(x-24)+'" y1="'+cy+'" x2="'+(x+30)+'" y2="'+cy+'" stroke="'+c+'" stroke-width="2" opacity="0.5"/>';
+    g+='<rect x="'+(x-discW/2)+'" y="'+(cy-discH/2).toFixed(1)+'" width="'+discW+'" height="'+discH.toFixed(1)+'" rx="3" fill="url(#metal)" stroke="'+c+'" stroke-width="0.75" opacity="0.5"/>';
+    g+='<rect x="'+(x-hubW/2)+'" y="'+(cy-hubH/2).toFixed(1)+'" width="'+hubW+'" height="'+hubH.toFixed(1)+'" rx="6" fill="url(#metal)" stroke="'+c+'" stroke-width="1" opacity="0.72"/>';
+    g+='<circle cx="'+x+'" cy="'+(cy-hubH*0.27).toFixed(1)+'" r="1.4" fill="'+c+'" opacity="0.6"/>';
+    g+='<circle cx="'+x+'" cy="'+(cy+hubH*0.27).toFixed(1)+'" r="1.4" fill="'+c+'" opacity="0.6"/>';
+    g+='</g>';
+    return g;
   }
   function suspension(hubX, cy, c){
     var sx=hubX+104, topY=30, sTop=46, sBot=148, shBot=206, r=16, eyeY=shBot+6;
@@ -641,13 +653,14 @@
     for (var i=0;i<=loops;i++){ var yy=sTop+i*gap; g+='<path d="M'+(sx-r)+' '+yy+' Q'+sx+' '+(yy-gap*0.78)+' '+(sx+r)+' '+yy+'"/>'; } // coils
     g+='<line x1="'+(sx-r)+'" y1="'+sTop+'" x2="'+(sx-r)+'" y2="'+sBot+'"/>';
     g+='<line x1="'+(sx+r)+'" y1="'+sTop+'" x2="'+(sx+r)+'" y2="'+sBot+'"/>';
-    g+='<rect x="'+(sx-8)+'" y="'+sBot+'" width="16" height="'+(eyeY-sBot)+'" rx="6" fill="'+c+'" fill-opacity="0.18"/>'; // shock body
+    g+='<rect x="'+(sx-8)+'" y="'+sBot+'" width="16" height="'+(eyeY-sBot)+'" rx="6" fill="url(#metal)" stroke="'+c+'" stroke-width="0.75" opacity="0.85"/>'; // shock body
     // lower eye — the joint everything meets at
-    g+='<circle cx="'+sx+'" cy="'+eyeY+'" r="5" fill="'+c+'" fill-opacity="0.25"/>';
+    g+='<circle cx="'+sx+'" cy="'+eyeY+'" r="5" fill="'+c+'" fill-opacity="0.3"/>';
     // knuckle: hub upright -> lower eye
-    g+='<line x1="'+(hubX+14)+'" y1="'+cy+'" x2="'+sx+'" y2="'+eyeY+'" stroke-width="6" opacity="0.55"/>';
+    g+='<line x1="'+(hubX+14)+'" y1="'+cy+'" x2="'+sx+'" y2="'+eyeY+'" stroke-width="6" opacity="0.6"/>';
     // lower control arm: hub back -> top of shock body (forms |< with the knuckle)
-    g+='<line x1="'+(hubX+14)+'" y1="'+cy+'" x2="'+sx+'" y2="'+sBot+'" stroke-width="6" opacity="0.55"/>';
+    g+='<line x1="'+(hubX+14)+'" y1="'+cy+'" x2="'+sx+'" y2="'+sBot+'" stroke-width="6" opacity="0.6"/>';
+    g+='<circle cx="'+(hubX+14)+'" cy="'+cy+'" r="3" fill="'+c+'" fill-opacity="0.5" stroke="none"/>'; // knuckle joint
     g+='</g>';
     return g;
   }
@@ -663,8 +676,15 @@
     var cy=groundY-(n.D/2)*sc;
 
     var P=[];
-    P.push('<defs><pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="'+cLine+'" stroke-width="0.5" opacity="0.5"/></pattern></defs>');
+    P.push('<defs>'
+      +'<pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="'+cLine+'" stroke-width="0.5" opacity="0.5"/></pattern>'
+      +'<radialGradient id="bgGlow"><stop offset="0" stop-color="'+cNew+'" stop-opacity="0.1"/><stop offset="1" stop-color="'+cNew+'" stop-opacity="0"/></radialGradient>'
+      +'<linearGradient id="tireGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+cNew+'" stop-opacity="0.2"/><stop offset="0.5" stop-color="'+cNew+'" stop-opacity="0.05"/><stop offset="1" stop-color="'+cNew+'" stop-opacity="0.14"/></linearGradient>'
+      +'<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+cFaint+'" stop-opacity="0.5"/><stop offset="1" stop-color="'+cFaint+'" stop-opacity="0.2"/></linearGradient>'
+      +'<filter id="wglow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"/></filter>'
+      +'</defs>');
     P.push('<rect width="'+W+'" height="380" fill="url(#grid)"/>');
+    P.push('<ellipse cx="'+(hubX+12)+'" cy="'+cy.toFixed(1)+'" rx="160" ry="175" fill="url(#bgGlow)"/>');
     P.push('<line x1="14" y1="'+groundY+'" x2="'+(W-14)+'" y2="'+groundY+'" stroke="'+cFaint+'" stroke-width="1.5"/>');
     for (var gx=18; gx<W-14; gx+=14){ P.push('<line x1="'+gx+'" y1="'+groundY+'" x2="'+(gx-6)+'" y2="'+(groundY+6)+'" stroke="'+cFaint+'" stroke-width="0.75" opacity="0.6"/>'); }
     P.push('<text x="'+(W/2)+'" y="'+(groundY+19)+'" text-anchor="middle" fill="'+cDim+'" font-size="9" letter-spacing="1.5" font-family="ui-monospace,monospace">ROAD</text>');

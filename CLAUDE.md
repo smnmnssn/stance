@@ -21,8 +21,12 @@ without a fresh ask.
 - Output order: graph (cross-section) is the top block, then the verdict readout.
 - Verdict readout: poke change, inner clearance, ride height, fitment badge
   (Mild/Moderate/Aggressive/Extreme by |poke delta|).
-- Cross-section diagram (SVG, looking along the axle): both wheels overlaid,
-  dimension lines, a faint coilover (spring → shock → lower eye) + hub/brake, tread ticks.
+- Cross-section diagram (SVG, looking along the axle): both wheels overlaid — the **new**
+  wheel has a soft glow + gradient tire fill + rim flanges + tread; the **old** wheel is a
+  dashed ghost; ghosted coilover + metal-gradient hub/brake; dimension lines; ROAD label.
+  Depth comes from SVG `<defs>` (radial bg glow, tire/metal gradients, a `feGaussianBlur`
+  `#wglow` filter) built from the runtime theme colors. `wheel()` still returns the same
+  geometry object — don't change the returns or the hover highlights break.
 - Results table: Current / New / Δ.
 - Glossary ("what the numbers mean") + **hover-to-locate**: hovering a glossary
   term, a table row, or a New-setup input highlights that exact measurement on
