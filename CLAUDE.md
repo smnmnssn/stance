@@ -16,8 +16,9 @@ utilitarian rather than a brand. Don't reintroduce STANCE branding or the visual
 without a fresh ask.
 
 ## Current state (done)
-- Two setups (Current / New) with live inputs — no "Calculate" button.
-- Live sliders on New: rim width, offset (ET), profile.
+- Two setups (Old / New) with live inputs — no "Calculate" button.
+- Live compact slider under every New-setup input (Ø, width, ET, tyre, profile).
+- Output order: graph (cross-section) is the top block, then the verdict readout.
 - Verdict readout: poke change, inner clearance, ride height, fitment badge
   (Mild/Moderate/Aggressive/Extreme by |poke delta|).
 - Cross-section diagram (SVG, looking along the axle): both wheels overlaid,

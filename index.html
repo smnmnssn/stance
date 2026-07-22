@@ -125,6 +125,12 @@
   input[type=range]::-moz-range-track { height: 4px; border-radius: 4px; background: var(--line); }
   input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--new); margin-top: -6px; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
   input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--new); border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
+  input[type=range].mini { height: 15px; margin-top: 1px; }
+  input[type=range].mini::-webkit-slider-runnable-track { height: 3px; }
+  input[type=range].mini::-moz-range-track { height: 3px; }
+  input[type=range].mini::-webkit-slider-thumb { width: 13px; height: 13px; margin-top: -5px; }
+  input[type=range].mini::-moz-range-thumb { width: 13px; height: 13px; }
+  .calc-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-dim); font-weight: 700; margin: 8px 0 6px; }
 
   .output { display: flex; flex-direction: column; gap: 18px; }
 
@@ -253,7 +259,7 @@
     <div class="setups">
       <div class="panel card existing">
         <div class="card-head">
-          <span class="dot"></span><h2 class="card-title">Current setup</h2>
+          <span class="dot"></span><h2 class="card-title">Old setup</h2>
           <span class="card-sub" id="sum-e">16×6 ET50</span>
         </div>
         <div class="fields">
@@ -271,23 +277,29 @@
           <span class="card-sub" id="sum-n">17×8 ET45</span>
         </div>
         <div class="fields">
-          <div class="field" data-hl="diameter"><label for="n-dia">Rim Ø</label><div class="input-row"><input id="n-dia" type="number" value="17" step="0.5"><span class="unit">in</span></div></div>
-          <div class="field" data-hl="width"><label for="n-width">Rim width</label><div class="input-row"><input id="n-width" type="number" value="8" step="0.5"><span class="unit">J</span></div></div>
-          <div class="slider"><input id="n-width-s" type="range" min="5" max="13" step="0.5" value="8" aria-label="New rim width"></div>
-          <div class="field" data-hl="et"><label for="n-et">Offset</label><div class="input-row"><input id="n-et" type="number" value="45" step="1"><span class="unit">ET</span></div></div>
-          <div class="field" data-hl="width"><label for="n-tyre">Tire width</label><div class="input-row"><input id="n-tyre" type="number" value="235" step="5"><span class="unit">mm</span></div></div>
-          <div class="slider"><input id="n-et-s" type="range" min="-20" max="70" step="1" value="45" aria-label="New offset"></div>
-          <div class="field span" data-hl="sidewall"><label for="n-profile">Profile</label><div class="input-row"><input id="n-profile" type="number" value="50" step="5"><span class="unit">%</span></div></div>
-          <div class="slider"><input id="n-profile-s" type="range" min="20" max="90" step="5" value="50" aria-label="New profile"></div>
+          <div class="field" data-hl="diameter"><label for="n-dia">Rim Ø</label><div class="input-row"><input id="n-dia" type="number" value="17" step="0.5"><span class="unit">in</span></div><input id="n-dia-s" class="mini" type="range" min="13" max="24" step="0.5" value="17" aria-label="New rim diameter"></div>
+          <div class="field" data-hl="width"><label for="n-width">Rim width</label><div class="input-row"><input id="n-width" type="number" value="8" step="0.5"><span class="unit">J</span></div><input id="n-width-s" class="mini" type="range" min="5" max="13" step="0.5" value="8" aria-label="New rim width"></div>
+          <div class="field" data-hl="et"><label for="n-et">Offset</label><div class="input-row"><input id="n-et" type="number" value="45" step="1"><span class="unit">ET</span></div><input id="n-et-s" class="mini" type="range" min="-20" max="70" step="1" value="45" aria-label="New offset"></div>
+          <div class="field" data-hl="width"><label for="n-tyre">Tire width</label><div class="input-row"><input id="n-tyre" type="number" value="235" step="5"><span class="unit">mm</span></div><input id="n-tyre-s" class="mini" type="range" min="135" max="355" step="5" value="235" aria-label="New tire width"></div>
+          <div class="field span" data-hl="sidewall"><label for="n-profile">Profile</label><div class="input-row"><input id="n-profile" type="number" value="50" step="5"><span class="unit">%</span></div><input id="n-profile-s" class="mini" type="range" min="20" max="90" step="5" value="50" aria-label="New profile"></div>
         </div>
       </div>
     </div>
 
     <div class="output">
+      <div class="panel diagram-wrap">
+        <h2 class="sr-only">Cross-section diagram</h2>
+        <div class="diagram-head">
+          <span class="lbl">Cross-section · looking along the axle</span>
+          <span class="legend"><span class="e"><i></i>Old</span><span class="n"><i></i>New</span></span>
+        </div>
+        <svg id="diagram" viewBox="0 0 480 380" role="img" aria-label="Cross-section comparison of old and new wheel fitment"></svg>
+      </div>
+
       <div class="panel verdict">
         <h2 class="sr-only">Fitment summary</h2>
         <div class="verdict-row">
-          <div class="vstat val-poke"><span class="k">Poke change</span><span class="v" id="v-poke">+30.4<small>mm</small></span><span class="cap">outer lip vs. current</span></div>
+          <div class="vstat val-poke"><span class="k">Poke change</span><span class="v" id="v-poke">+30.4<small>mm</small></span><span class="cap">outer lip vs. old</span></div>
           <div class="vstat"><span class="k">Inner clearance</span><span class="v" id="v-strut">−20.4<small>mm</small></span><span class="cap" id="v-strut-cap">closer to strut</span></div>
           <div class="vstat"><span class="k">Ride height</span><span class="v" id="v-height">+35<small>mm</small></span><span class="cap">taller rolling radius</span></div>
           <div class="vstat" style="justify-content:flex-end;"><span class="k">Fitment</span><span id="v-badge" class="badge warn" style="margin-top:4px;">Aggressive</span></div>
@@ -295,19 +307,10 @@
         <div class="verdict-note" id="note"></div>
       </div>
 
-      <div class="panel diagram-wrap">
-        <h2 class="sr-only">Cross-section diagram</h2>
-        <div class="diagram-head">
-          <span class="lbl">Cross-section · looking along the axle</span>
-          <span class="legend"><span class="e"><i></i>Current</span><span class="n"><i></i>New</span></span>
-        </div>
-        <svg id="diagram" viewBox="0 0 480 380" role="img" aria-label="Cross-section comparison of current and new wheel fitment"></svg>
-      </div>
-
       <div class="panel results">
         <h2 class="sr-only">Detailed comparison</h2>
         <table>
-          <thead><tr><th>Measurement</th><th class="c-e">Current</th><th class="c-n">New</th><th>Δ</th></tr></thead>
+          <thead><tr><th>Measurement</th><th class="c-e">Old</th><th class="c-n">New</th><th>Δ</th></tr></thead>
           <tbody id="rows"></tbody>
         </table>
       </div>
@@ -334,24 +337,28 @@
       <p class="lead">This calculator compares two wheel-and-tire setups and shows exactly how the new one changes your car's stance, clearance and speedometer reading. Every number updates live from standard fitment geometry — no guesswork. Here are the formulas it uses (lengths in millimeters; 1 inch = 25.4 mm). Outside North America a tire is spelled <em>tyre</em>, but the math is identical.</p>
 
       <h3>Poke and inset — how far the wheel sits out or in</h3>
+      <p>Poke is how far the outer lip sits past the hub mounting face — more poke means a more aggressive stance and a higher chance of catching the fender. Inset (also called backspacing) is the inner equivalent: the room the wheel needs before it fouls the strut, spring or control arm. A lower offset (ET) or a wider rim both increase poke.</p>
+      <div class="calc-label">Calculation</div>
       <div class="formula"><b>Poke</b> = (rim width in inches × 25.4 ÷ 2) − offset (ET)</div>
       <div class="formula"><b>Inset</b> = (rim width in inches × 25.4 ÷ 2) + offset (ET)</div>
-      <p>Poke is how far the outer lip sits past the hub mounting face — more poke means a more aggressive stance and a higher chance of catching the fender. Inset (also called backspacing) is the inner equivalent: the room the wheel needs before it fouls the strut, spring or control arm. A lower offset (ET) or a wider rim both increase poke.</p>
 
       <h3>Rolling diameter, rolling radius and circumference</h3>
+      <p>A tire's profile (aspect ratio) is its sidewall height as a percentage of its section width, so a 225/45 tire has a sidewall of 225 × 0.45 = 101.25 mm.</p>
+      <div class="calc-label">Calculation</div>
       <div class="formula"><b>Rolling diameter</b> = (rim diameter in inches × 25.4) + 2 × (tire width × profile ÷ 100)</div>
       <div class="formula"><b>Rolling radius</b> = rolling diameter ÷ 2 &nbsp;·&nbsp; <b>Circumference</b> = rolling diameter × π</div>
-      <p>A tire's profile (aspect ratio) is its sidewall height as a percentage of its section width, so a 225/45 tire has a sidewall of 225 × 0.45 = 101.25 mm.</p>
       <p class="note-inline">This calculator uses the standard rolling-diameter formula (rim + twice the sidewall). It does <strong>not</strong> apply a tire-stretch adjustment, so overall-diameter figures can differ by a few millimeters from a heavily stretched fitment. Poke, inset, offset, ride-height and speedometer figures are exact.</p>
 
       <h3>Ride-height change</h3>
-      <div class="formula"><b>Ride-height change</b> = (new rolling diameter − old rolling diameter) ÷ 2</div>
       <p>A taller tire raises the axle by half the increase in diameter — and closes the gap to the fender by the same amount. A shorter tire lowers it. Rim size alone doesn't change ride height: go up an inch in wheel but drop the tire profile to keep the same rolling diameter ("plus sizing") and the car sits at exactly the same height.</p>
+      <div class="calc-label">Calculation</div>
+      <div class="formula"><b>Ride-height change</b> = (new rolling diameter − old rolling diameter) ÷ 2</div>
 
       <h3>Speedometer error</h3>
+      <p>Your speedometer is calibrated to the original tire's circumference. Fit a larger-diameter tire and the car travels farther per revolution than the speedometer assumes, so you are actually going faster than it shows (a negative error). A smaller-diameter tire does the opposite and reads high.</p>
+      <div class="calc-label">Calculation</div>
       <div class="formula"><b>Speedometer error %</b> = (old circumference − new circumference) ÷ new circumference × 100</div>
       <div class="formula"><b>True speed</b> = indicated speed × old circumference ÷ new circumference</div>
-      <p>Your speedometer is calibrated to the original tire's circumference. Fit a larger-diameter tire and the car travels farther per revolution than the speedometer assumes, so you are actually going faster than it shows (a negative error). A smaller-diameter tire does the opposite and reads high.</p>
     </section>
 
     <section class="panel prose faq" id="faq">
@@ -463,7 +470,7 @@
   var IN = 25.4;
   var $ = function(id){ return document.getElementById(id); };
   var fields = ["e-dia","e-width","e-et","e-tyre","e-profile","n-dia","n-width","n-et","n-tyre","n-profile"];
-  var pairs = [["n-width","n-width-s"],["n-et","n-et-s"],["n-profile","n-profile-s"]];
+  var pairs = [["n-dia","n-dia-s"],["n-width","n-width-s"],["n-et","n-et-s"],["n-tyre","n-tyre-s"],["n-profile","n-profile-s"]];
   var units = "metric";
   var CUR = null, curHL = null;
 
@@ -568,7 +575,7 @@
     return { svg:g, outerX:outerX, innerX:innerX, top:top, x:x, w:w, h:h };
   }
   function hub(x, cy, c, R){
-    var discH=R*1.25, discW=8, hubH=R*0.62, hubW=30;
+    var discH=R*1.05, discW=8, hubH=R*0.42, hubW=30;
     return '<g opacity="0.6">'+
       '<rect x="'+(x-discW/2)+'" y="'+(cy-discH/2).toFixed(1)+'" width="'+discW+'" height="'+discH.toFixed(1)+'" rx="3" fill="'+c+'"/>'+
       '<rect x="'+(x-hubW/2)+'" y="'+(cy-hubH/2).toFixed(1)+'" width="'+hubW+'" height="'+hubH.toFixed(1)+'" rx="6" fill="'+c+'"/>'+
@@ -609,6 +616,7 @@
     P.push('<rect width="'+W+'" height="380" fill="url(#grid)"/>');
     P.push('<line x1="14" y1="'+groundY+'" x2="'+(W-14)+'" y2="'+groundY+'" stroke="'+cFaint+'" stroke-width="1.5"/>');
     for (var gx=18; gx<W-14; gx+=14){ P.push('<line x1="'+gx+'" y1="'+groundY+'" x2="'+(gx-6)+'" y2="'+(groundY+6)+'" stroke="'+cFaint+'" stroke-width="0.75" opacity="0.6"/>'); }
+    P.push('<text x="'+(W/2)+'" y="'+(groundY+19)+'" text-anchor="middle" fill="'+cDim+'" font-size="9" letter-spacing="1.5" font-family="ui-monospace,monospace">ROAD</text>');
 
     P.push(suspension(hubX, cy, cFaint));
 
@@ -630,12 +638,13 @@
 
     if (!hl){
       if (Math.abs(wn.outerX-hubX)>8){
-        P.push(dimLine(Math.min(wn.outerX,hubX), Math.max(wn.outerX,hubX), 90, cNew));
-        P.push('<text x="'+((wn.outerX+hubX)/2)+'" y="84" text-anchor="middle" fill="'+cNew+'" font-size="10" font-weight="700" font-family="ui-monospace,monospace">poke '+dgLabel(n.poke)+'</text>');
+        var pokeY=Math.min(wn.top-12, 26);
+        P.push(dimLine(Math.min(wn.outerX,hubX), Math.max(wn.outerX,hubX), pokeY, cNew));
+        P.push('<text x="'+((wn.outerX+hubX)/2)+'" y="'+(pokeY-5)+'" text-anchor="middle" fill="'+cNew+'" font-size="10" font-weight="700" font-family="ui-monospace,monospace">poke '+dgLabel(n.poke)+'</text>');
       }
       var dxN=24, midY=(wn.top+groundY)/2;
       P.push('<g stroke="'+cNew+'"><line x1="'+dxN+'" y1="'+wn.top+'" x2="'+dxN+'" y2="'+groundY+'" stroke-width="1"/><line x1="'+(dxN-3)+'" y1="'+wn.top+'" x2="'+(dxN+3)+'" y2="'+wn.top+'" stroke-width="1"/><line x1="'+(dxN-3)+'" y1="'+groundY+'" x2="'+(dxN+3)+'" y2="'+groundY+'" stroke-width="1"/></g>');
-      P.push('<text x="'+(dxN+6)+'" y="'+midY+'" fill="'+cNew+'" font-size="10" font-weight="700" font-family="ui-monospace,monospace" transform="rotate(-90 '+(dxN+6)+' '+midY+')" text-anchor="middle">Ø '+dgLabel(n.D)+'</text>');
+      P.push('<text x="'+(dxN+16)+'" y="'+midY+'" fill="'+cNew+'" font-size="10" font-weight="700" font-family="ui-monospace,monospace" transform="rotate(-90 '+(dxN+16)+' '+midY+')" text-anchor="middle">Ø '+dgLabel(n.D)+'</text>');
     } else if (hl==="poke"){
       P.push(faceHL); P.push(edgeV(wn.outerX));
       P.push(dimLine(Math.min(wn.outerX,hubX), Math.max(wn.outerX,hubX), hy, cHL));
