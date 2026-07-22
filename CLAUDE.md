@@ -22,8 +22,9 @@ without a fresh ask.
 - Verdict readout: poke change, inner clearance, ride height, fitment badge
   (Mild/Moderate/Aggressive/Extreme by |poke delta|).
 - Cross-section diagram (SVG, looking along the axle): both wheels overlaid — the **new**
-  wheel has a soft glow + gradient tire fill + rim flanges + tread; the **old** wheel is a
-  dashed ghost; ghosted coilover + metal-gradient hub/brake; dimension lines; ROAD label.
+  wheel has a soft glow + gradient tire fill + one subtle rim outline + tread; the **old**
+  wheel is a plain dashed silhouette (no inner detail — kept deliberately minimal to avoid
+  center clutter); ghosted coilover + metal-gradient hub/brake; dimension lines; ROAD label.
   Depth comes from SVG `<defs>` (radial bg glow, tire/metal gradients, a `feGaussianBlur`
   `#wglow` filter) built from the runtime theme colors. `wheel()` still returns the same
   geometry object — don't change the returns or the hover highlights break.
