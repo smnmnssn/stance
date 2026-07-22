@@ -26,7 +26,7 @@
 <style>
   :root {
     --ground: #0b0e12; --surface: #141922; --surface-2: #1b212c; --line: #28303b; --line-soft: #1e2530;
-    --ink: #eaf0f6; --ink-dim: #8b97a6; --ink-faint: #5c6675;
+    --ink: #eaf0f6; --ink-dim: #8b97a6; --ink-faint: #7c8b9e;
     --existing: #ff7a33; --existing-soft: rgba(255,122,51,0.14);
     --new: #31c8ff; --new-soft: rgba(49,200,255,0.14);
     --hl: #ffcf40;
@@ -39,17 +39,17 @@
   @media (prefers-color-scheme: light) {
     :root {
       --ground: #e9edf2; --surface: #ffffff; --surface-2: #f3f6fa; --line: #d3dae3; --line-soft: #e4e9ef;
-      --ink: #131a23; --ink-dim: #5a6675; --ink-faint: #97a2b0;
-      --existing: #e8611a; --existing-soft: rgba(232,97,26,0.12);
-      --new: #0a9fd4; --new-soft: rgba(10,159,212,0.12);
+      --ink: #131a23; --ink-dim: #5a6675; --ink-faint: #556070;
+      --existing: #c2410c; --existing-soft: rgba(232,97,26,0.12);
+      --new: #0e7490; --new-soft: rgba(10,159,212,0.12);
       --hl: #b7790a;
-      --ok: #1a9e5c; --warn: #c67d09; --bad: #dc3c50;
+      --ok: #15803d; --warn: #b45309; --bad: #b91c1c;
       --shadow: 0 1px 2px rgba(20,30,45,0.06), 0 10px 30px rgba(30,45,70,0.08);
     }
   }
   :root[data-theme="dark"] {
     --ground: #0b0e12; --surface: #141922; --surface-2: #1b212c; --line: #28303b; --line-soft: #1e2530;
-    --ink: #eaf0f6; --ink-dim: #8b97a6; --ink-faint: #5c6675;
+    --ink: #eaf0f6; --ink-dim: #8b97a6; --ink-faint: #7c8b9e;
     --existing: #ff7a33; --existing-soft: rgba(255,122,51,0.14);
     --new: #31c8ff; --new-soft: rgba(49,200,255,0.14); --hl: #ffcf40;
     --ok: #2fd27a; --warn: #ffb02e; --bad: #ff5468;
@@ -57,10 +57,10 @@
   }
   :root[data-theme="light"] {
     --ground: #e9edf2; --surface: #ffffff; --surface-2: #f3f6fa; --line: #d3dae3; --line-soft: #e4e9ef;
-    --ink: #131a23; --ink-dim: #5a6675; --ink-faint: #97a2b0;
-    --existing: #e8611a; --existing-soft: rgba(232,97,26,0.12);
-    --new: #0a9fd4; --new-soft: rgba(10,159,212,0.12); --hl: #b7790a;
-    --ok: #1a9e5c; --warn: #c67d09; --bad: #dc3c50;
+    --ink: #131a23; --ink-dim: #5a6675; --ink-faint: #556070;
+    --existing: #c2410c; --existing-soft: rgba(232,97,26,0.12);
+    --new: #0e7490; --new-soft: rgba(10,159,212,0.12); --hl: #b7790a;
+    --ok: #15803d; --warn: #b45309; --bad: #b91c1c;
     --shadow: 0 1px 2px rgba(20,30,45,0.06), 0 10px 30px rgba(30,45,70,0.08);
   }
 
@@ -248,6 +248,7 @@
     </div>
   </header>
 
+  <main>
   <div class="grid">
     <div class="setups">
       <div class="panel card existing">
@@ -256,11 +257,11 @@
           <span class="card-sub" id="sum-e">16×6 ET50</span>
         </div>
         <div class="fields">
-          <div class="field"><label>Rim Ø</label><div class="input-row"><input id="e-dia" type="number" value="16" step="0.5"><span class="unit">in</span></div></div>
-          <div class="field"><label>Rim width</label><div class="input-row"><input id="e-width" type="number" value="6" step="0.5"><span class="unit">J</span></div></div>
-          <div class="field"><label>Offset</label><div class="input-row"><input id="e-et" type="number" value="50" step="1"><span class="unit">ET</span></div></div>
-          <div class="field"><label>Tire width</label><div class="input-row"><input id="e-tyre" type="number" value="225" step="5"><span class="unit">mm</span></div></div>
-          <div class="field span"><label>Profile</label><div class="input-row"><input id="e-profile" type="number" value="45" step="5"><span class="unit">%</span></div></div>
+          <div class="field"><label for="e-dia">Rim Ø</label><div class="input-row"><input id="e-dia" type="number" value="16" step="0.5"><span class="unit">in</span></div></div>
+          <div class="field"><label for="e-width">Rim width</label><div class="input-row"><input id="e-width" type="number" value="6" step="0.5"><span class="unit">J</span></div></div>
+          <div class="field"><label for="e-et">Offset</label><div class="input-row"><input id="e-et" type="number" value="50" step="1"><span class="unit">ET</span></div></div>
+          <div class="field"><label for="e-tyre">Tire width</label><div class="input-row"><input id="e-tyre" type="number" value="225" step="5"><span class="unit">mm</span></div></div>
+          <div class="field span"><label for="e-profile">Profile</label><div class="input-row"><input id="e-profile" type="number" value="45" step="5"><span class="unit">%</span></div></div>
         </div>
       </div>
 
@@ -270,13 +271,13 @@
           <span class="card-sub" id="sum-n">17×8 ET45</span>
         </div>
         <div class="fields">
-          <div class="field" data-hl="diameter"><label>Rim Ø</label><div class="input-row"><input id="n-dia" type="number" value="17" step="0.5"><span class="unit">in</span></div></div>
-          <div class="field" data-hl="width"><label>Rim width</label><div class="input-row"><input id="n-width" type="number" value="8" step="0.5"><span class="unit">J</span></div></div>
+          <div class="field" data-hl="diameter"><label for="n-dia">Rim Ø</label><div class="input-row"><input id="n-dia" type="number" value="17" step="0.5"><span class="unit">in</span></div></div>
+          <div class="field" data-hl="width"><label for="n-width">Rim width</label><div class="input-row"><input id="n-width" type="number" value="8" step="0.5"><span class="unit">J</span></div></div>
           <div class="slider"><input id="n-width-s" type="range" min="5" max="13" step="0.5" value="8" aria-label="New rim width"></div>
-          <div class="field" data-hl="et"><label>Offset</label><div class="input-row"><input id="n-et" type="number" value="45" step="1"><span class="unit">ET</span></div></div>
-          <div class="field" data-hl="width"><label>Tire width</label><div class="input-row"><input id="n-tyre" type="number" value="235" step="5"><span class="unit">mm</span></div></div>
+          <div class="field" data-hl="et"><label for="n-et">Offset</label><div class="input-row"><input id="n-et" type="number" value="45" step="1"><span class="unit">ET</span></div></div>
+          <div class="field" data-hl="width"><label for="n-tyre">Tire width</label><div class="input-row"><input id="n-tyre" type="number" value="235" step="5"><span class="unit">mm</span></div></div>
           <div class="slider"><input id="n-et-s" type="range" min="-20" max="70" step="1" value="45" aria-label="New offset"></div>
-          <div class="field span" data-hl="sidewall"><label>Profile</label><div class="input-row"><input id="n-profile" type="number" value="50" step="5"><span class="unit">%</span></div></div>
+          <div class="field span" data-hl="sidewall"><label for="n-profile">Profile</label><div class="input-row"><input id="n-profile" type="number" value="50" step="5"><span class="unit">%</span></div></div>
           <div class="slider"><input id="n-profile-s" type="range" min="20" max="90" step="5" value="50" aria-label="New profile"></div>
         </div>
       </div>
@@ -399,6 +400,7 @@
       </div>
     </section>
   </div>
+  </main>
 
   <footer>
     <div class="flag">

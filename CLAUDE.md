@@ -91,6 +91,12 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
   glyph — de-branded from the old condensed-uppercase STANCE wordmark, 2026-07-22);
   condensed uppercase for section labels/badges; **monospace tabular** for all numbers;
   system sans for UI. Fonts are system stacks (Artifact CSP blocks font CDNs).
+- **Accessibility (WCAG AA) — do not undo:** light-theme accents (`--new` `#0e7490`,
+  `--existing` `#c2410c`, `--ok` `#15803d`, `--warn` `#b45309`, `--bad` `#b91c1c`) are
+  intentionally *darker* than the bright dark-theme versions so colored text clears
+  4.5:1 on white — don't lighten them back. `--ink-faint` was bumped in both themes
+  for the same reason. Every number input has `<label for=…>`; main content is wrapped
+  in `<main>`. Lighthouse: Perf/Best-Practices/SEO 100, Accessibility fixed to pass.
 
 ## Deploy
 - GitHub: https://github.com/smnmnssn/stance.git  (branch `main`)
@@ -115,6 +121,7 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
 - [ ] Submit `sitemap.xml` to Google Search Console after deploy (manual — owner's account).
 - [ ] Off-page: backlinks from car forums / Reddit / enthusiast communities (the real ranking lever vs willtheyfit.com).
 - [x] Analytics: GoatCounter live at `wheelfitmentcalculator.goatcounter.com` — snippet active at the bottom of `index.html`.
+- [x] Accessibility: Lighthouse a11y fixes — associated form labels, `<main>` landmark, WCAG AA contrast (light accents darkened, faint ink bumped). Perf/Best-Practices/SEO already 100.
 - [ ] Optional: make the share link remember the metric/imperial choice.
 - [ ] Fitment verdict thresholds are a placeholder heuristic; a real "will it rub"
       needs fender/suspension data (the data-moat problem).
