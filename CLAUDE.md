@@ -88,6 +88,33 @@ internal links + AI citations):
 - **IndexNow** key file: `/7a3f9c2e14b86d05f9a1c3e7b2d4a8b1.txt` (POST changed URLs to
   api.indexnow.org to nudge Bing).
 
+## Writing style rules for site copy (2026-07-24, owner preference)
+- **No em dashes ("—") anywhere in on-page copy** (index.html or any /guides page) — owner
+  considers it a tell-tale sign of AI-written text. Rewrite with a period, comma, colon, or
+  semicolon instead. Middle dots ("·", used for unit separators like "mm · km/h") and math
+  minus signs in formulas ("−") are fine; only the em dash is banned. Code comments aren't
+  copy, so this doesn't apply there, but keep them dash-free too since it's zero effort.
+- **Guide names are Title Case wherever used as a link/label**: nav labels, breadcrumbs,
+  related-guide grids, the homepage `#guides` section. Example: "What Is Wheel Poke?", not
+  "What is wheel poke?". (The `<h1>`s were already written this way; only the nav-style
+  labels needed fixing.) Body prose keeps normal sentence case.
+- **Guide page structure order:** prose → `.note` (disclaimer/caveat box) → `.cta` (button
+  back to the calculator) → `.related` (Related guides grid). The CTA always sits directly
+  above Related guides, never above the note.
+- **`.cta` button** (in `assets/site.css`): a gradient card with a small uppercase
+  `.cta-badge` ("Free · No sign-up required"), a bold `.cta-title`, and a `.cta-sub`
+  subtext — not a plain flat link. Keep the free/no-sign-up badge on every CTA.
+- **Homepage title is a stacked logo**: `.site-title` is a flex column, one word per line,
+  left-aligned ("Wheel" / "Fitment" / "Calculator", middle word in `--new`). Don't collapse
+  it back to a single inline line. The small nav-bar name on `/guides/*` pages stays inline
+  (compact utility label, not the logo).
+- **Known duplicate disclaimer content (flagged, not yet resolved):** the "How it works"
+  `.note-inline` in index.html and the `.note` in
+  `guides/tire-size-and-speedometer-error.html` both restate the "rolling diameter is the
+  standard formula, not tire-stretch-adjusted" point in slightly different words. A third,
+  near-identical copy in the footer was removed 2026-07-24. Ask the owner before touching
+  the remaining two; they were told about the overlap and haven't decided yet.
+
 ## The math — VERIFIED, do not guess or "improve" without data
 Reverse-engineered from willtheyfit.com screenshots and matched to the exact
 decimals (incl. their purple summary box). `IN = 25.4`.
