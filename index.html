@@ -105,9 +105,14 @@
   .seg button:hover { color: var(--ink); border-color: transparent; }
   .seg button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.28); }
 
-  .grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 18px; align-items: start; }
+  .grid, .content { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 18px; align-items: start; }
   .grid > *, .output > *, .setups > * { min-width: 0; }
-  @media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+  .content-inner { grid-column: 2; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: minmax(0, 1fr); }
+    .content { grid-template-columns: minmax(0, 1fr); }
+    .content-inner { grid-column: 1; }
+  }
   .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
 
   .setups { display: flex; flex-direction: column; gap: 14px; }
@@ -217,7 +222,7 @@
   h2.gloss-head { margin: 0 0 12px; }
 
   /* long-form content sections (SEO / AEO copy) */
-  .content { display: flex; flex-direction: column; gap: 18px; margin-top: 18px; }
+  .content { margin-top: 18px; }
   .guide-links { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
   @media (max-width: 560px) { .guide-links { grid-template-columns: 1fr; } }
   .guide-links a { display: block; background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; color: var(--ink); font-weight: 600; font-size: 14px; text-decoration: none; transition: border-color .12s; }
@@ -264,7 +269,8 @@
     .diagram-head .lbl { font-size: 11px; }
     .gloss { padding: 14px 14px 16px; }
     .prose { padding: 18px 16px; }
-    .content { gap: 14px; margin-top: 14px; }
+    .content { margin-top: 14px; }
+    .content-inner { gap: 14px; }
     th, td { padding: 8px 6px; font-size: 12px; }
     thead th { font-size: 11px; }
     th:first-child, td:first-child { font-size: 12px; }
@@ -392,6 +398,7 @@
   </div>
 
   <div class="content">
+   <div class="content-inner">
     <section class="panel prose" id="how">
       <h2>How the wheel &amp; tire fitment calculator works</h2>
       <p class="lead">This calculator compares two wheel-and-tire setups and shows exactly how the new one changes your car's stance, clearance and speedometer reading. Every number updates live from standard fitment geometry, so there's no guesswork. Here are the formulas it uses (lengths in millimeters; 1 inch = 25.4 mm). Outside North America a tire is spelled <em>tyre</em>, but the math is identical.</p>
@@ -477,6 +484,7 @@
         <a href="/guides/how-to-read-a-tire-size">How to Read a Tire Size →</a>
       </div>
     </section>
+   </div>
   </div>
   </main>
 

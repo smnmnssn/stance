@@ -176,6 +176,16 @@ their site (hold tyre fixed, step rim width 6→10J; then step profile) and refi
   in `<main>`. Fitment badges use a solid `--surface-2` fill (NOT a color tint) so the
   colored badge text stays ≥4.5:1. Lighthouse: Perf/Best-Practices/SEO 100, Accessibility
   fixed to pass.
+- **Desktop column widths (2026-07-24) — keep `.grid` and `.content` in sync:** `.grid`
+  (setup cards + output) and `.content` (How it works / FAQ / Guides) share the identical
+  `grid-template-columns: 290px minmax(0, 1fr)` rule (same selector, one declaration) so
+  the output column and the sections below it are always the exact same width — no
+  visible "jump" when scrolling from the calculator into the prose sections. The input
+  column is 290px (down from 340px, ~15% thinner, freeing that width to the output side).
+  The 3 prose `<section>`s live inside `.content-inner` (`grid-column: 2`), which resets to
+  `grid-column: 1` at the same ≤860px breakpoint where `.grid`/`.content` collapse to one
+  column. If you ever change the 290px value, it only needs to change in one place because
+  both grids share the rule — don't split them back into separate declarations.
 - **Responsive (mobile) — do not undo:** the grid uses `minmax(0, 1fr)` and grid/flex
   children get `min-width: 0` so the nowrap results table and diagram header can't force
   horizontal **page** overflow — they scroll/wrap inside their own box instead. Mobile
