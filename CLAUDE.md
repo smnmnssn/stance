@@ -101,13 +101,26 @@ internal links + AI citations):
 - **Guide page structure order:** prose → `.note` (disclaimer/caveat box) → `.cta` (button
   back to the calculator) → `.related` (Related guides grid). The CTA always sits directly
   above Related guides, never above the note.
-- **`.cta` button** (in `assets/site.css`): a gradient card with a small uppercase
-  `.cta-badge` ("Free · No sign-up required"), a bold `.cta-title`, and a `.cta-sub`
-  subtext — not a plain flat link. Keep the free/no-sign-up badge on every CTA.
-- **Homepage title is a stacked logo**: `.site-title` is a flex column, one word per line,
-  left-aligned ("Wheel" / "Fitment" / "Calculator", middle word in `--new`). Don't collapse
-  it back to a single inline line. The small nav-bar name on `/guides/*` pages stays inline
-  (compact utility label, not the logo).
+- **`.cta` button** (in `assets/site.css`, updated 2026-07-24): deliberately low-key, NOT a
+  bright gradient block. A single line of text ending in a `<span class="cta-arrow">→</span>`,
+  muted tinted background (`color-mix(... var(--new) 8%, var(--surface-2))`), thin accent
+  border, ~half the height of the original design. All 4 guides use the identical copy
+  "Compare your new setup to your old one with our free wheel fitment calculator →" — say
+  "compare", not "visualize" (the tool shows a labeled diagram, not a photo-real render;
+  "visualize" overclaims and belongs to the shelved visualizer idea, see
+  [[product-direction]]).
+- **Homepage header lockup**: `.brand-lockup` groups the wheel-mark SVG + the stacked
+  `.site-title` (one word per line, left-aligned, "Fitment" in `--new`) inline as one unit.
+  The `.tagline` sits beside that lockup (not below it) as a second flex child of `.brand`;
+  `.brand` wraps on narrow screens so the tagline drops under the lockup instead of
+  overflowing. Don't move the tagline back inside a `brand-text` column under the title.
+  The small nav-bar name on `/guides/*` pages stays inline (compact utility label, not the
+  logo).
+- **FAQ → guide cross-links**: where an FAQ question has a directly matching guide, its
+  `.faq-a` div ends with `<p class="faq-more">Read more: <a href="...">Title Case
+  Name</a></p>` (poke, offset, offset-vs-inset, speedometer, and rolling-diameter-calc
+  currently link out). Don't add one where there's no real match; three FAQ questions
+  (fit-my-car, is-it-free, metric/imperial) intentionally have none.
 - **Known duplicate disclaimer content (flagged, not yet resolved):** the "How it works"
   `.note-inline` in index.html and the `.note` in
   `guides/tire-size-and-speedometer-error.html` both restate the "rolling diameter is the

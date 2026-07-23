@@ -74,12 +74,12 @@
   .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 64px; }
 
   header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
-  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .brand-lockup { display: flex; align-items: center; gap: 16px; }
   .brand-mark { width: 54px; height: 54px; flex: none; }
-  .brand-text { display: flex; flex-direction: column; gap: 8px; }
   .site-title { display: flex; flex-direction: column; align-items: flex-start; font-family: 'Space Grotesk', var(--font-ui); font-weight: 700; font-size: clamp(17px, 3.4vw, 22px); letter-spacing: -0.01em; line-height: 1.05; margin: 0; color: var(--ink); }
   .site-title .ttl-accent { color: var(--new); }
-  .tagline { color: var(--ink-dim); font-size: 13px; max-width: 40ch; letter-spacing: 0.01em; }
+  .tagline { color: var(--ink-dim); font-size: 13px; max-width: 34ch; flex: 1 1 240px; letter-spacing: 0.01em; }
   .tagline strong { color: var(--ink); font-weight: 600; }
   .head-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
@@ -246,6 +246,8 @@
   .faq-a p { margin: 0 0 8px; }
   .faq-a p:last-child { margin-bottom: 0; }
   .faq-a code { font-family: var(--font-mono); font-size: 12.5px; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 4px; padding: 1px 5px; color: var(--ink); }
+  .faq-more { font-size: 12.5px; }
+  .faq-more a { color: var(--new); font-weight: 600; }
 
   /* ---- responsive / touch ---- */
   img, svg, table { max-width: 100%; }
@@ -282,21 +284,21 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-        <circle cx="16" cy="16" r="11.6" fill="none" stroke="var(--new)" stroke-width="1.3" opacity="0.5"/>
-        <circle cx="16" cy="16" r="8.3" fill="none" stroke="var(--new)" stroke-width="2.3"/>
-        <line x1="16.00" y1="12.70" x2="16.00" y2="8.80" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
-        <line x1="19.14" y1="14.98" x2="22.85" y2="13.78" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
-        <line x1="17.94" y1="18.67" x2="20.23" y2="21.82" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
-        <line x1="14.06" y1="18.67" x2="11.77" y2="21.82" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
-        <line x1="12.86" y1="14.98" x2="9.15" y2="13.78" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
-        <circle cx="16" cy="16" r="2.7" fill="var(--ground)" stroke="var(--new)" stroke-width="1.6"/>
-        <circle cx="16" cy="16" r="1.05" fill="var(--existing)"/>
-      </svg>
-      <div class="brand-text">
+      <div class="brand-lockup">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <circle cx="16" cy="16" r="11.6" fill="none" stroke="var(--new)" stroke-width="1.3" opacity="0.5"/>
+          <circle cx="16" cy="16" r="8.3" fill="none" stroke="var(--new)" stroke-width="2.3"/>
+          <line x1="16.00" y1="12.70" x2="16.00" y2="8.80" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
+          <line x1="19.14" y1="14.98" x2="22.85" y2="13.78" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
+          <line x1="17.94" y1="18.67" x2="20.23" y2="21.82" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
+          <line x1="14.06" y1="18.67" x2="11.77" y2="21.82" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
+          <line x1="12.86" y1="14.98" x2="9.15" y2="13.78" stroke="var(--new)" stroke-width="1.7" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="2.7" fill="var(--ground)" stroke="var(--new)" stroke-width="1.6"/>
+          <circle cx="16" cy="16" r="1.05" fill="var(--existing)"/>
+        </svg>
         <h1 class="site-title"><span>Wheel</span><span class="ttl-accent">Fitment</span><span>Calculator</span></h1>
-        <p class="tagline">Compare two setups: poke, clearance, rolling radius &amp; speedometer error, live as you dial it in.</p>
       </div>
+      <p class="tagline">Compare two setups: poke, clearance, rolling radius &amp; speedometer error, live as you dial it in.</p>
     </div>
     <div class="head-actions">
       <div class="seg" id="units" role="group" aria-label="Units">
@@ -428,19 +430,19 @@
         </details>
         <details class="faq-item">
           <summary>What is wheel poke?</summary>
-          <div class="faq-a"><p>Poke is how far the outer face of the wheel and tire sticks out past the hub mounting face. More poke gives a more aggressive stance but raises the chance of the tire catching the fender. It's calculated as <code>poke = (rim width in inches × 25.4 ÷ 2) − offset (ET)</code>.</p></div>
+          <div class="faq-a"><p>Poke is how far the outer face of the wheel and tire sticks out past the hub mounting face. More poke gives a more aggressive stance but raises the chance of the tire catching the fender. It's calculated as <code>poke = (rim width in inches × 25.4 ÷ 2) − offset (ET)</code>.</p><p class="faq-more">Read more: <a href="/guides/what-is-wheel-poke">What Is Wheel Poke?</a></p></div>
         </details>
         <details class="faq-item">
           <summary>What does offset (ET) mean?</summary>
-          <div class="faq-a"><p>Offset, stamped "ET" on a wheel, is the distance in millimeters between the wheel's mounting face and its true centerline. A higher ET tucks the wheel further under the car; a lower or negative ET pushes it outward for more poke. Offset is the single biggest factor in how a wheel sits in the arch.</p></div>
+          <div class="faq-a"><p>Offset, stamped "ET" on a wheel, is the distance in millimeters between the wheel's mounting face and its true centerline. A higher ET tucks the wheel further under the car; a lower or negative ET pushes it outward for more poke. Offset is the single biggest factor in how a wheel sits in the arch.</p><p class="faq-more">Read more: <a href="/guides/wheel-offset-et-explained">Wheel Offset (ET) Explained</a></p></div>
         </details>
         <details class="faq-item">
           <summary>What's the difference between offset and backspacing (inset)?</summary>
-          <div class="faq-a"><p>Offset is measured from the wheel's centerline, while inset (also called backspacing) is measured from the inner lip and tells you how much room the wheel needs before it hits the strut, spring or control arm. This calculator shows both at once so you can check outer stance and inner clearance together.</p></div>
+          <div class="faq-a"><p>Offset is measured from the wheel's centerline, while inset (also called backspacing) is measured from the inner lip and tells you how much room the wheel needs before it hits the strut, spring or control arm. This calculator shows both at once so you can check outer stance and inner clearance together.</p><p class="faq-more">Read more: <a href="/guides/wheel-offset-et-explained">Wheel Offset (ET) Explained</a></p></div>
         </details>
         <details class="faq-item">
           <summary>How does tire size affect my speedometer?</summary>
-          <div class="faq-a"><p>Your speedometer is calibrated to the rolling circumference of the original tire. A larger-diameter tire covers more ground per revolution, so the car goes faster than the speedometer reads; a smaller tire makes it read high. The calculator shows the exact speedometer error percentage and your true speed at any indicated speed.</p></div>
+          <div class="faq-a"><p>Your speedometer is calibrated to the rolling circumference of the original tire. A larger-diameter tire covers more ground per revolution, so the car goes faster than the speedometer reads; a smaller tire makes it read high. The calculator shows the exact speedometer error percentage and your true speed at any indicated speed.</p><p class="faq-more">Read more: <a href="/guides/tire-size-and-speedometer-error">Does Tire Size Affect Your Speedometer?</a></p></div>
         </details>
         <details class="faq-item">
           <summary>What is tire stretch, and does this calculator account for it?</summary>
@@ -448,7 +450,7 @@
         </details>
         <details class="faq-item">
           <summary>How do I calculate rolling diameter and rolling radius?</summary>
-          <div class="faq-a"><p>Rolling diameter = <code>(rim diameter in inches × 25.4) + 2 × (tire width × profile ÷ 100)</code>, and rolling radius is half of that. For example, a 225/45 R17 tire measures 17 × 25.4 + 2 × (225 × 0.45) = 431.8 + 202.5 = <strong>634.3 mm</strong> in diameter.</p></div>
+          <div class="faq-a"><p>Rolling diameter = <code>(rim diameter in inches × 25.4) + 2 × (tire width × profile ÷ 100)</code>, and rolling radius is half of that. For example, a 225/45 R17 tire measures 17 × 25.4 + 2 × (225 × 0.45) = 431.8 + 202.5 = <strong>634.3 mm</strong> in diameter.</p><p class="faq-more">Read more: <a href="/guides/tire-size-and-speedometer-error">Does Tire Size Affect Your Speedometer?</a></p></div>
         </details>
         <details class="faq-item">
           <summary>Will bigger wheels change my ride height?</summary>
