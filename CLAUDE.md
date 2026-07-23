@@ -67,6 +67,26 @@ npm i @resvg/resvg-js        # in any scratch dir, not the repo
 node -e "const{Resvg}=require('@resvg/resvg-js');const fs=require('fs');const p=new Resvg(fs.readFileSync('og-image.svg'),{fitTo:{mode:'width',value:1200}}).render().asPng();fs.writeFileSync('og-image.png',p)"
 ```
 
+## Content pages (guides) — multi-page since 2026-07-23
+The site is no longer a single file. `index.html` is still the self-contained calculator,
+but there are now static **guide pages** under `/guides/` for SEO (long-tail search +
+internal links + AI citations):
+- `wheel-offset-et-explained`, `what-is-wheel-poke`, `tire-size-and-speedometer-error`,
+  `willtheyfit-alternative` (competitor-brand-capture page).
+- They share **`/assets/site.css`** (brand tokens + the Space Grotesk font file at
+  `/assets/space-grotesk-700.woff2`). The calculator keeps its own inline CSS; the guides
+  do NOT reuse the calculator CSS.
+- Each guide has its own meta/canonical/OG + `Article` + `BreadcrumbList` JSON-LD, a CTA
+  back to the calculator, and cross-links. `index.html` links them from its `#guides`
+  section; it also carries `WebSite` + `Organization` JSON-LD.
+- **Clean URLs** via `vercel.json` (`cleanUrls: true`) — reference `/guides/slug` with NO
+  `.html`. Canonicals + sitemap use the extensionless form.
+- **To add a guide:** copy an existing one, swap content + meta + canonical + schema, then
+  add it to `sitemap.xml`, the `#guides` links in `index.html`, and the related-links grid
+  of the sibling guides.
+- **IndexNow** key file: `/7a3f9c2e14b86d05f9a1c3e7b2d4a8b1.txt` (POST changed URLs to
+  api.indexnow.org to nudge Bing).
+
 ## The math — VERIFIED, do not guess or "improve" without data
 Reverse-engineered from willtheyfit.com screenshots and matched to the exact
 decimals (incl. their purple summary box). `IN = 25.4`.

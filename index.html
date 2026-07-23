@@ -218,6 +218,10 @@
 
   /* long-form content sections (SEO / AEO copy) */
   .content { display: flex; flex-direction: column; gap: 18px; margin-top: 18px; }
+  .guide-links { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+  @media (max-width: 560px) { .guide-links { grid-template-columns: 1fr; } }
+  .guide-links a { display: block; background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; color: var(--ink); font-weight: 600; font-size: 14px; text-decoration: none; transition: border-color .12s; }
+  .guide-links a:hover { border-color: var(--ink-faint); }
   .prose { padding: 22px 24px 24px; }
   .prose h2 { font-family: var(--font-cond); text-transform: uppercase; letter-spacing: .05em; font-size: clamp(18px, 3vw, 21px); font-weight: 800; margin: 0 0 6px; }
   .prose > p, .prose h3 + p { max-width: 74ch; }
@@ -460,6 +464,17 @@
         </details>
       </div>
     </section>
+
+    <section class="panel prose" id="guides">
+      <h2>Wheel &amp; tire fitment guides</h2>
+      <p>New to fitment? These plain-English guides explain the numbers this calculator shows.</p>
+      <div class="guide-links">
+        <a href="/guides/wheel-offset-et-explained">Wheel offset (ET) explained →</a>
+        <a href="/guides/what-is-wheel-poke">What is wheel poke? →</a>
+        <a href="/guides/tire-size-and-speedometer-error">Does tire size affect your speedometer? →</a>
+        <a href="/guides/willtheyfit-alternative">A free willtheyfit.com alternative →</a>
+      </div>
+    </section>
   </div>
   </main>
 
@@ -477,6 +492,15 @@
 
 <div class="toast" id="toast">Link copied</div>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", "@id": "https://wheelfitmentcalculator.com/#org", "name": "Wheel Fitment Calculator", "url": "https://wheelfitmentcalculator.com/", "logo": "https://wheelfitmentcalculator.com/favicon-96.png" },
+    { "@type": "WebSite", "@id": "https://wheelfitmentcalculator.com/#website", "name": "Wheel Fitment Calculator", "url": "https://wheelfitmentcalculator.com/", "publisher": { "@id": "https://wheelfitmentcalculator.com/#org" }, "inLanguage": "en" }
+  ]
+}
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

@@ -1,0 +1,78 @@
+/* Shared styles for the content/guide pages (the calculator app keeps its own inline CSS). */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/space-grotesk-700.woff2) format('woff2');
+}
+
+:root {
+  --ground: #0b0e12; --surface: #141922; --surface-2: #1b212c; --line: #28303b; --line-soft: #1e2530;
+  --ink: #eaf0f6; --ink-dim: #8b97a6; --ink-faint: #7c8b9e;
+  --existing: #ff7a33; --new: #31c8ff; --hl: #ffcf40;
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SFMono-Regular", "Segoe UI Mono", Consolas, "Liberation Mono", monospace;
+  --shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 8px 30px rgba(0,0,0,0.35);
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --ground: #e9edf2; --surface: #ffffff; --surface-2: #f3f6fa; --line: #d3dae3; --line-soft: #e4e9ef;
+    --ink: #131a23; --ink-dim: #5a6675; --ink-faint: #556070;
+    --existing: #c2410c; --new: #0e7490; --hl: #b7790a;
+    --shadow: 0 1px 2px rgba(20,30,45,0.06), 0 10px 30px rgba(30,45,70,0.08);
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--font-ui); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 24px 20px 72px; }
+img, svg { max-width: 100%; }
+a { color: var(--new); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* header */
+.site-header { display: flex; align-items: center; gap: 12px; padding: 14px 0 22px; border-bottom: 1px solid var(--line-soft); margin-bottom: 6px; }
+.site-header .mark { width: 40px; height: 40px; flex: none; }
+.site-header .name { font-family: 'Space Grotesk', var(--font-ui); font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); }
+.site-header .name b { color: var(--new); font-weight: 700; }
+.site-header .to-app { margin-left: auto; font-family: var(--font-ui); font-size: 13.5px; font-weight: 600; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
+.site-header .to-app:hover { border-color: var(--ink-faint); text-decoration: none; }
+
+/* breadcrumb */
+.crumb { font-size: 13px; color: var(--ink-faint); margin: 18px 0 4px; }
+.crumb a { color: var(--ink-dim); }
+
+/* article */
+article h1 { font-family: 'Space Grotesk', var(--font-ui); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-size: clamp(28px, 5vw, 40px); margin: 8px 0 10px; }
+article h1 .accent { color: var(--new); }
+.lead { font-size: 18px; color: var(--ink-dim); margin: 0 0 26px; }
+article h2 { font-family: 'Space Grotesk', var(--font-ui); font-weight: 700; letter-spacing: -0.01em; font-size: 23px; margin: 34px 0 10px; }
+article h3 { font-size: 17px; font-weight: 700; margin: 24px 0 6px; }
+article p { margin: 0 0 15px; color: var(--ink); }
+article ul, article ol { margin: 0 0 15px; padding-left: 22px; color: var(--ink); }
+article li { margin: 0 0 7px; }
+article strong { font-weight: 600; }
+.muted { color: var(--ink-dim); }
+
+.formula { font-family: var(--font-mono); font-size: 14px; line-height: 1.5; background: var(--surface-2); border: 1px solid var(--line-soft); border-left: 3px solid var(--new); border-radius: 8px; padding: 12px 15px; margin: 0 0 14px; color: var(--ink); overflow-x: auto; }
+.formula b { color: var(--new); }
+.note { border-left: 3px solid var(--hl); background: color-mix(in srgb, var(--hl) 9%, transparent); padding: 12px 15px; border-radius: 8px; font-size: 14.5px; color: var(--ink-dim); margin: 0 0 16px; }
+
+/* call-to-action to the calculator */
+.cta { display: block; text-align: center; background: var(--new); color: #04121a; border-radius: 12px; padding: 16px 20px; font-weight: 700; font-size: 16px; margin: 28px 0; box-shadow: var(--shadow); }
+.cta:hover { filter: brightness(1.06); text-decoration: none; }
+.cta small { display: block; font-weight: 500; font-size: 13px; opacity: 0.8; margin-top: 2px; }
+@media (prefers-color-scheme: light) { .cta { color: #ffffff; } }
+
+/* related guides */
+.related { margin-top: 40px; border-top: 1px solid var(--line-soft); padding-top: 22px; }
+.related h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-dim); margin: 0 0 12px; font-family: var(--font-ui); font-weight: 700; }
+.related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 560px) { .related-grid { grid-template-columns: 1fr; } }
+.related-grid a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; color: var(--ink); font-weight: 600; font-size: 14.5px; }
+.related-grid a:hover { border-color: var(--ink-faint); text-decoration: none; }
+
+footer { margin-top: 40px; border-top: 1px solid var(--line-soft); padding-top: 18px; color: var(--ink-faint); font-size: 13px; line-height: 1.6; }
+footer a { color: var(--ink-dim); }
