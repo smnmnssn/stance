@@ -72,7 +72,8 @@ The site is no longer a single file. `index.html` is still the self-contained ca
 but there are now static **guide pages** under `/guides/` for SEO (long-tail search +
 internal links + AI citations):
 - `wheel-offset-et-explained`, `what-is-wheel-poke`, `tire-size-and-speedometer-error`,
-  `willtheyfit-alternative` (competitor-brand-capture page).
+  `how-to-read-a-tire-size`. (A `willtheyfit-alternative` competitor-capture page was
+  tried and removed 2026-07-24 — owner didn't want that framing on the site.)
 - They share **`/assets/site.css`** (brand tokens + the Space Grotesk font file at
   `/assets/space-grotesk-700.woff2`). The calculator keeps its own inline CSS; the guides
   do NOT reuse the calculator CSS.
